@@ -1,0 +1,75 @@
+.user-table-card{
+    background:#fff;
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:0 8px 24px rgba(15,23,42,.05);
+    border:1px solid #e5e7eb;
+}
+
+.user-table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.user-table th{
+    background:#f8fafc;
+    text-align:left;
+    padding:18px;
+    font-size:15px;
+    color:#475569;
+}
+
+.user-table td{
+    padding:18px;
+    border-top:1px solid #eef2f7;
+}
+
+.user-table tbody tr:hover{
+    background:#f8fbff;
+}
+
+.status{
+    padding:6px 12px;
+    border-radius:999px;
+    font-size:13px;
+    font-weight:600;
+}
+
+.status.active{
+    background:#dcfce7;
+    color:#16a34a;
+}
+
+.status.blocked{
+    background:#fee2e2;
+    color:#dc2626;
+}
+
+.status.inactive{
+    background:#f3f4f6;
+    color:#6b7280;
+}
+
+.actions{
+    display:flex;
+    gap:10px;
+}
+
+.actions button{
+    width:36px;
+    height:36px;
+    border:none;
+    border-radius:10px;
+    background:#f1f5f9;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.actions button:hover{
+    background:#2563eb;
+    color:#fff;
+}
+
+.actions .delete:hover{
+    background:#dc2626;
+}

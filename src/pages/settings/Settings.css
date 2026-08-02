@@ -1,0 +1,51 @@
+.settings-page {
+
+    width: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 28px;
+
+    padding: 10px 5px 40px;
+
+}
+
+.settings-header {
+
+    background: white;
+
+    border-radius: 20px;
+
+    padding: 30px;
+
+    border: 1px solid #e2e8f0;
+
+    box-shadow:
+        0 8px 24px rgba(15,23,42,.04),
+        0 2px 6px rgba(15,23,42,.03);
+
+}
+
+.settings-header h1 {
+
+    margin: 0;
+
+    font-size: 32px;
+
+    color: #0f172a;
+
+}
+
+.settings-header p {
+
+    margin-top: 10px;
+
+    color: #64748b;
+
+    font-size: 15px;
+
+    max-width: 650px;
+
+}

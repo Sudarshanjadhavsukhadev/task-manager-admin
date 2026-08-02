@@ -1,0 +1,44 @@
+.modal-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(15,23,42,.55);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:999;
+}
+
+.task-modal{
+    width:850px;
+    max-width:95%;
+    max-height:90vh;
+    background:#fff;
+    border-radius:22px;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+}
+
+.task-modal-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:22px 30px;
+    border-bottom:1px solid #e2e8f0;
+}
+
+.task-modal-header h2{
+    margin:0;
+}
+
+.task-modal-header button{
+    border:none;
+    background:none;
+    font-size:28px;
+    cursor:pointer;
+}
+
+.task-modal-body{
+    padding:30px;
+    overflow-y:auto;
+}

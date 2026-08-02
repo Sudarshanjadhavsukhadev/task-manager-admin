@@ -1,0 +1,295 @@
+/* ===========================
+   Overlay
+=========================== */
+
+.schedule-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, .45);
+    backdrop-filter: blur(8px);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 9999;
+}
+
+/* ===========================
+   Modal
+=========================== */
+
+.schedule-modal {
+    width: 650px;
+    max-width: 90%;
+    background: #fff;
+
+    border-radius: 24px;
+
+    box-shadow: 0 25px 60px rgba(0, 0, 0, .18);
+
+    overflow: hidden;
+
+    animation: popup .25s ease;
+}
+
+@keyframes popup {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* ===========================
+   Header
+=========================== */
+
+.schedule-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 22px 28px;
+
+    border-bottom: 1px solid #edf2f7;
+}
+
+.schedule-header h2 {
+    margin: 0;
+    font-size: 24px;
+    color: #111827;
+    font-weight: 700;
+}
+
+.schedule-header button {
+    width: 38px;
+    height: 38px;
+
+    border: none;
+    border-radius: 12px;
+
+    background: #f3f4f6;
+
+    cursor: pointer;
+
+    font-size: 18px;
+
+    transition: .25s;
+}
+
+.schedule-header button:hover {
+    background: #ef4444;
+    color: #fff;
+}
+
+/* ===========================
+   Body
+=========================== */
+
+.schedule-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.schedule-body input,
+.schedule-body textarea,
+.schedule-body select {
+    width: 100%;
+
+     padding: 10px 14px;
+
+    border: 1px solid #dbe2ea;
+
+    border-radius: 14px;
+
+    font-size: 15px;
+
+    outline: none;
+
+    transition: .25s;
+}
+
+.schedule-body input:focus,
+.schedule-body textarea:focus,
+.schedule-body select:focus {
+    border-color: #2563eb;
+
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, .12);
+}
+
+.schedule-body textarea {
+    resize: none;
+    min-height: 110px;
+}
+
+.schedule-body label {
+    font-size: 15px;
+    font-weight: 600;
+    color: #334155;
+}
+
+/* ===========================
+   Multi Select
+=========================== */
+
+.schedule-body select {
+    min-height: 150px;
+}
+
+/* ===========================
+   Footer
+=========================== */
+
+.schedule-footer{
+    display:flex;
+    justify-content:flex-end;
+    align-items:center;
+    gap:16px;
+
+    padding:20px 24px;
+
+    border-top:1px solid #edf2f7;
+}
+
+.schedule-footer .cancel-btn,
+.schedule-footer .save-btn{
+
+    width:180px !important;
+    min-width:180px;
+    max-width:180px;
+
+    height:52px;
+
+    flex:none !important;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.cancel-btn{
+    background:#e5e7eb;
+    color:#111827;
+}
+
+.cancel-btn:hover{
+    background:#d1d5db;
+}
+
+.save-btn{
+    background:#2563eb;
+    color:#fff;
+    box-shadow:0 10px 25px rgba(37,99,235,.25);
+}
+
+.save-btn:hover{
+    background:#1d4ed8;
+    transform:translateY(-2px);
+}
+
+
+
+/* ===========================
+   Responsive
+=========================== */
+
+@media(max-width:768px) {
+
+    .schedule-modal {
+        width: 95%;
+    }
+
+    .schedule-footer {
+        flex-direction: column;
+    }
+
+    .cancel-btn,
+    .save-btn {
+        width: 100%;
+    }
+
+}
+
+/* ===========================
+   Date & Time
+=========================== */
+
+.schedule-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+}
+
+/* ===========================
+   Users
+=========================== */
+
+.users-list{
+
+    max-height:180px;
+
+    overflow-y:auto;
+
+    display:flex;
+    flex-direction:column;
+
+    gap:10px;
+
+    padding:10px;
+
+    border:1px solid #dbe2ea;
+
+    border-radius:14px;
+
+    background:#f8fafc;
+}
+
+.user-item{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    padding:12px 14px;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    transition:.25s;
+}
+
+.user-item:hover{
+
+    background:#eff6ff;
+
+}
+
+.user-item input{
+
+    width:18px;
+
+    height:18px;
+
+    accent-color:#2563eb;
+
+}
+
+.user-item span{
+
+    font-size:15px;
+
+    font-weight:500;
+
+    color:#0f172a;
+
+}

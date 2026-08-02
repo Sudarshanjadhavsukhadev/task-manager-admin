@@ -1,0 +1,33 @@
+.user-layout{
+    display:flex;
+    min-height:100vh;
+    background:#f5f7fb;
+}
+
+.user-main{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    min-width:0;
+}
+
+.user-content{
+    flex:1;
+    padding:24px;
+    overflow:auto;
+}
+
+.sidebar-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(15,23,42,.45);
+    z-index:998;
+}
+
+@media (max-width:768px){
+
+.user-content{
+    padding:16px;
+}
+
+}

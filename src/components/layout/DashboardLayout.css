@@ -1,0 +1,43 @@
+/* ===========================
+   Dashboard Layout
+=========================== */
+
+.dashboard-layout {
+  min-height: 100vh;
+  background: #f1f5f9;
+}
+
+/* Main Content */
+.dashboard-main {
+  margin-left: 260px;              /* Sidebar Width */
+  margin-top: 80px;                /* Header Height */
+
+  width: calc(100% - 260px);
+  min-height: calc(100vh - 80px);
+
+  padding: 30px;
+
+  background: #f1f5f9;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  transition: all 0.3s ease;
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .dashboard-main {
+    margin-left: 220px;
+    width: calc(100% - 220px);
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .dashboard-main {
+    margin-left: 0;
+    width: 100%;
+    padding: 20px;
+  }
+}

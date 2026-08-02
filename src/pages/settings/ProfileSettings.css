@@ -1,0 +1,227 @@
+.profile-settings{
+
+    background:#fff;
+
+    border:1px solid #e2e8f0;
+
+    border-radius:20px;
+
+    padding:30px;
+
+    box-shadow:
+        0 8px 24px rgba(15,23,42,.04),
+        0 2px 6px rgba(15,23,42,.03);
+
+}
+
+.settings-card-header{
+
+    margin-bottom:30px;
+
+}
+
+.settings-card-header h2{
+
+    margin:0;
+
+    color:#0f172a;
+
+}
+
+.settings-card-header p{
+
+    margin-top:8px;
+
+    color:#64748b;
+
+}
+
+.profile-content{
+
+    display:flex;
+
+    gap:40px;
+
+    align-items:flex-start;
+
+}
+
+.profile-avatar{
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    gap:18px;
+
+    min-width:220px;
+
+}
+
+.avatar-circle{
+
+    width:130px;
+
+    height:130px;
+
+    border-radius:50%;
+
+    background:#2563eb;
+
+    color:white;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:42px;
+
+    font-weight:700;
+
+}
+
+.upload-btn{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    border:none;
+
+    background:#f1f5f9;
+
+    padding:12px 18px;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+}
+
+.profile-form{
+
+    flex:1;
+
+}
+
+.form-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:22px;
+
+}
+
+.form-group{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:8px;
+
+}
+
+.form-group label{
+
+    font-size:14px;
+
+    font-weight:600;
+
+    color:#334155;
+
+}
+
+.form-group input{
+
+    height:50px;
+
+    border:1px solid #dbe3ee;
+
+    border-radius:12px;
+
+    padding:0 15px;
+
+    font-size:15px;
+
+    transition:.3s;
+
+}
+
+.form-group input:focus{
+
+    outline:none;
+
+    border-color:#2563eb;
+
+    box-shadow:0 0 0 4px rgba(37,99,235,.10);
+
+}
+
+.save-btn{
+
+    margin-top:30px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    background:#2563eb;
+
+    color:white;
+
+    border:none;
+
+    border-radius:12px;
+
+    padding:14px 22px;
+
+    cursor:pointer;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+.save-btn:hover{
+
+    background:#1d4ed8;
+
+}
+
+@media(max-width:900px){
+
+.profile-content{
+
+flex-direction:column;
+
+}
+
+.profile-avatar{
+
+width:100%;
+
+}
+
+.form-grid{
+
+grid-template-columns:1fr;
+
+}
+
+}

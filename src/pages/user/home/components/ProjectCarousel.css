@@ -1,0 +1,57 @@
+.project-carousel{
+
+    margin-top:32px;
+
+}
+
+.carousel-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:18px;
+
+}
+
+.carousel-header h2{
+
+    margin:0;
+
+}
+
+.carousel-header button{
+
+    border:none;
+
+    background:none;
+
+    color:#2563eb;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+}
+
+.project-scroll{
+
+    display:flex;
+
+    gap:18px;
+
+    overflow-x:auto;
+
+    scroll-snap-type:x mandatory;
+
+    padding-bottom:6px;
+
+}
+
+.project-scroll::-webkit-scrollbar{
+
+    display:none;
+
+}

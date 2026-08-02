@@ -1,0 +1,49 @@
+.today-schedule {
+  margin-top: 20px;
+  background: #fff;
+  border-radius: 20px;
+  padding: 22px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+}
+
+.today-schedule h2 {
+  margin: 0 0 18px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.no-schedule {
+  text-align: center;
+  color: #94a3b8;
+  padding: 20px 0;
+}
+
+.schedule-card {
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 14px;
+  transition: 0.3s;
+}
+
+.schedule-card:last-child {
+  margin-bottom: 0;
+}
+
+.schedule-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(37, 99, 235, 0.08);
+}
+
+.schedule-card h3 {
+  margin: 0 0 10px;
+  font-size: 17px;
+  color: #1e293b;
+}
+
+.schedule-card p {
+  margin: 4px 0;
+  color: #64748b;
+  font-size: 14px;
+}

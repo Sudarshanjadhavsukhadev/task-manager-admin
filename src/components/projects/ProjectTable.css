@@ -1,0 +1,110 @@
+.project-table-card {
+    background: white;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(15,23,42,.05);
+    border: 1px solid #e5e7eb;
+}
+
+.project-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.project-table th {
+    background: #f8fafc;
+    padding: 18px;
+    text-align: left;
+    color: #475569;
+}
+
+.project-table td {
+    padding: 18px;
+    border-top: 1px solid #eef2f7;
+}
+
+.project-table tbody tr:hover {
+    background: #f8fbff;
+}
+
+.progress-bar {
+    width: 120px;
+    height: 8px;
+    background: #e2e8f0;
+    border-radius: 999px;
+    overflow: hidden;
+    margin-bottom: 6px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: #2563eb;
+    border-radius: 999px;
+}
+
+.priority,
+.status {
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.priority.high {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.priority.medium {
+    background: #fef3c7;
+    color: #d97706;
+}
+
+.priority.low {
+    background: #dcfce7;
+    color: #16a34a;
+}
+
+.status.active {
+    background: #dbeafe;
+    color: #2563eb;
+}
+
+.status.planning {
+    background: #fef3c7;
+    color: #b45309;
+}
+
+.status.completed {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.status.on-hold {
+    background: #e5e7eb;
+    color: #6b7280;
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+}
+
+.actions button {
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 10px;
+    background: #f1f5f9;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.actions button:hover {
+    background: #2563eb;
+    color: white;
+}
+
+.actions .delete:hover {
+    background: #dc2626;
+}

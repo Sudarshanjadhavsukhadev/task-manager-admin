@@ -1,0 +1,63 @@
+.schedule-item{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+    background:white;
+
+    border-radius:18px;
+
+    padding:16px;
+
+    margin-bottom:14px;
+
+    box-shadow:0 6px 20px rgba(15,23,42,.05);
+
+}
+
+.schedule-dot{
+
+    width:12px;
+
+    height:48px;
+
+    border-radius:999px;
+
+}
+
+.schedule-info{
+
+    flex:1;
+
+}
+
+.schedule-info h4{
+
+    margin:0;
+
+    font-size:16px;
+
+}
+
+.schedule-info p{
+
+    margin-top:6px;
+
+    color:#64748b;
+
+    font-size:14px;
+
+}
+
+.schedule-time{
+
+    font-weight:600;
+
+    color:#2563eb;
+
+    font-size:14px;
+
+}

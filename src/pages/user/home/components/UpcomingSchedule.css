@@ -1,0 +1,39 @@
+.upcoming-schedule{
+
+    margin-top:32px;
+
+}
+
+.schedule-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:18px;
+
+}
+
+.schedule-header h2{
+
+    margin:0;
+
+    font-size:22px;
+
+}
+
+.schedule-header button{
+
+    border:none;
+
+    background:none;
+
+    color:#2563eb;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+}

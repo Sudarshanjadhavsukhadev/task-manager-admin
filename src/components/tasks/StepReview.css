@@ -1,0 +1,27 @@
+.review-card{
+    margin-top:25px;
+    border:2px solid #e2e8f0;
+    border-radius:18px;
+    overflow:hidden;
+    background:#fff;
+}
+
+.review-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px 22px;
+    border-bottom:1px solid #f1f5f9;
+}
+
+.review-row:last-child{
+    border-bottom:none;
+}
+
+.review-row span{
+    color:#64748b;
+}
+
+.review-row strong{
+    color:#0f172a;
+}

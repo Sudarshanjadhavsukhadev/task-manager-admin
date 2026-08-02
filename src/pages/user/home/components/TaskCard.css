@@ -1,0 +1,101 @@
+.task-card{
+
+    background:white;
+
+    border-radius:22px;
+
+    padding:20px;
+
+    margin-bottom:16px;
+
+    box-shadow:0 8px 24px rgba(15,23,42,.05);
+
+}
+
+.task-top{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:flex-start;
+
+}
+
+.task-top h3{
+
+    margin:0;
+
+    font-size:18px;
+
+}
+
+.task-top p{
+
+    margin-top:8px;
+
+    color:#64748b;
+
+}
+
+.task-bottom{
+
+    margin-top:18px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+.task-time{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:6px;
+
+    color:#64748b;
+
+    font-size:14px;
+
+}
+
+.priority{
+
+    padding:8px 16px;
+
+    border-radius:999px;
+
+    font-size:13px;
+
+    font-weight:600;
+
+}
+
+.high{
+
+    background:#fee2e2;
+
+    color:#dc2626;
+
+}
+
+.medium{
+
+    background:#fef3c7;
+
+    color:#d97706;
+
+}
+
+.low{
+
+    background:#dcfce7;
+
+    color:#16a34a;
+
+}

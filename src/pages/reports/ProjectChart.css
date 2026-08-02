@@ -1,0 +1,33 @@
+.project-chart {
+
+    background: white;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 20px;
+
+    padding: 24px;
+
+    box-shadow:
+        0 8px 20px rgba(15,23,42,.04),
+        0 2px 6px rgba(15,23,42,.03);
+}
+
+.project-chart-header {
+
+    margin-bottom: 20px;
+}
+
+.project-chart-header h2 {
+
+    margin: 0;
+
+    color: #0f172a;
+
+    font-size: 22px;
+}
+
+.project-chart-body {
+
+    height: 320px;
+}

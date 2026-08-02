@@ -1,0 +1,33 @@
+.vision-board-page{
+
+    width:100%;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:28px;
+
+    padding:10px 5px 40px;
+
+}
+
+.vision-grid{
+
+    display:grid;
+
+    grid-template-columns:2fr 1fr;
+
+    gap:28px;
+
+}
+
+@media(max-width:992px){
+
+.vision-grid{
+
+grid-template-columns:1fr;
+
+}
+
+}

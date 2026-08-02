@@ -1,0 +1,18 @@
+.date-box{
+    margin-top:30px;
+}
+
+.date-box input{
+    width:100%;
+    height:60px;
+    border:2px solid #e2e8f0;
+    border-radius:16px;
+    padding:0 18px;
+    font-size:16px;
+}
+
+.date-box input:focus{
+    outline:none;
+    border-color:#2563eb;
+    box-shadow:0 0 0 4px rgba(37,99,235,.12);
+}

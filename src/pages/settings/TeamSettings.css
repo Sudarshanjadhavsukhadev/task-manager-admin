@@ -1,0 +1,155 @@
+.team-settings{
+
+    background:#fff;
+
+    border:1px solid #e2e8f0;
+
+    border-radius:20px;
+
+    padding:30px;
+
+    box-shadow:
+        0 8px 24px rgba(15,23,42,.04),
+        0 2px 6px rgba(15,23,42,.03);
+
+}
+
+.team-header{
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    margin:25px 0;
+
+}
+
+.invite-btn{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    background:#2563eb;
+
+    color:#fff;
+
+    border:none;
+
+    padding:12px 18px;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+.invite-btn:hover{
+
+    background:#1d4ed8;
+
+}
+
+.team-table-wrapper{
+
+    overflow-x:auto;
+
+}
+
+.team-table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    min-width:700px;
+
+}
+
+.team-table th{
+
+    background:#f8fafc;
+
+    padding:16px;
+
+    text-align:left;
+
+    color:#475569;
+
+}
+
+.team-table td{
+
+    padding:18px 16px;
+
+    border-bottom:1px solid #f1f5f9;
+
+}
+
+.team-table tr:hover{
+
+    background:#fafcff;
+
+}
+
+.role{
+
+    padding:6px 12px;
+
+    border-radius:999px;
+
+    font-size:13px;
+
+    font-weight:600;
+
+}
+
+.role.admin{
+
+    background:#fee2e2;
+
+    color:#b91c1c;
+
+}
+
+.role.manager{
+
+    background:#dbeafe;
+
+    color:#1d4ed8;
+
+}
+
+.role.member{
+
+    background:#dcfce7;
+
+    color:#15803d;
+
+}
+
+.status{
+
+    padding:6px 12px;
+
+    border-radius:999px;
+
+    font-size:13px;
+
+    font-weight:600;
+
+}
+
+.status.active{
+
+    background:#dcfce7;
+
+    color:#15803d;
+
+}

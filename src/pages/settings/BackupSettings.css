@@ -1,0 +1,117 @@
+.backup-settings{
+
+    background:#fff;
+
+    border:1px solid #e2e8f0;
+
+    border-radius:20px;
+
+    padding:30px;
+
+    box-shadow:
+        0 8px 24px rgba(15,23,42,.04),
+        0 2px 6px rgba(15,23,42,.03);
+
+}
+
+.backup-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:24px;
+
+    margin-top:25px;
+
+}
+
+.backup-card{
+
+    border:1px solid #e2e8f0;
+
+    border-radius:18px;
+
+    padding:28px;
+
+    text-align:center;
+
+    transition:.3s;
+
+}
+
+.backup-card:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:0 12px 28px rgba(15,23,42,.08);
+
+}
+
+.backup-card svg{
+
+    color:#2563eb;
+
+}
+
+.backup-card h3{
+
+    margin:18px 0 10px;
+
+    color:#0f172a;
+
+}
+
+.backup-card p{
+
+    color:#64748b;
+
+    margin-bottom:22px;
+
+    line-height:1.6;
+
+}
+
+.backup-card button{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:8px;
+
+    background:#2563eb;
+
+    color:#fff;
+
+    border:none;
+
+    padding:12px 20px;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+.backup-card button:hover{
+
+    background:#1d4ed8;
+
+}
+
+@media(max-width:768px){
+
+.backup-grid{
+
+grid-template-columns:1fr;
+
+}
+
+}
