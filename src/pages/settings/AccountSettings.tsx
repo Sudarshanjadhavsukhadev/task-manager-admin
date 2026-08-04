@@ -1,5 +1,5 @@
 import "./AccountSettings.css";
-import { Building2, Save } from "lucide-react";
+import { Building2 } from "lucide-react";
 
 export default function AccountSettings() {
   return (

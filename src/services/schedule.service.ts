@@ -1,70 +1,53 @@
-const API_URL = "http://localhost:5000/api/schedules";
+import { supabase } from "../lib/supabase";
 
 // Create Schedule
 export const createSchedule = async (schedule: any) => {
-  const response = await fetch(API_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(schedule),
-  });
+  const { data, error } = await supabase
+    .from("schedules")
+    .insert([schedule])
+    .select()
+    .single();
 
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.message);
-  }
+  if (error) throw error;
 
   return data;
 };
 
 // Get All Schedules
 export const getSchedules = async () => {
-  const response = await fetch(API_URL);
+  const { data, error } = await supabase
+    .from("schedules")
+    .select("*")
+    .order("created_at", { ascending: false });
 
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.message);
-  }
+  if (error) throw error;
 
   return data;
 };
 
 // Get Schedules By User
-export const getSchedulesByUser = async (
-  userId: string
-) => {
-  const response = await fetch(
-    `${API_URL}/user/${userId}`
-  );
+export const getSchedulesByUser = async (userId: string) => {
+  const { data, error } = await supabase
+    .from("schedules")
+    .select("*")
+    .eq("user_id", userId)
+    .order("created_at", { ascending: false });
 
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.message);
-  }
+  if (error) throw error;
 
   return data;
 };
 
 // Delete Schedule
-export const deleteSchedule = async (
-  id: string
-) => {
-  const response = await fetch(
-    `${API_URL}/${id}`,
-    {
-      method: "DELETE",
-    }
-  );
+export const deleteSchedule = async (id: string) => {
+  const { error } = await supabase
+    .from("schedules")
+    .delete()
+    .eq("id", id);
 
-  const data = await response.json();
+  if (error) throw error;
 
-  if (!response.ok) {
-    throw new Error(data.message);
-  }
-
-  return data;
+  return {
+    message: "Schedule deleted successfully.",
+  };
 };

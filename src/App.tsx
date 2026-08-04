@@ -1,8 +1,8 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import { useEffect } from "react";
 import { onMessage, messaging } from "./firebase/firebase";
 /* Admin */
-import Login from "./pages/auth/Login";
+
 import Dashboard from "./pages/dashboard/Dashboard";
 import Users from "./pages/users/Users";
 import Projects from "./pages/projects/Projects";
@@ -11,9 +11,10 @@ import Settings from "./pages/settings/Settings";
 import VisionBoard from "./pages/vision/VisionBoard";
 import AdminForgotPassword from "./pages/auth/ForgotPassword";
 import ResetPassword from "./pages/auth/ResetPassword";
-
+import UserDetails from "./pages/users/UserDetails";
 
 /* User */
+import UserProtectedRoute from "./routes/UserProtectedRoute";
 import UserLogin from "./pages/user/auth/Login";
 import Signup from "./pages/user/auth/Signup";
 import ForgotPassword from "./pages/user/auth/ForgotPassword";
@@ -47,7 +48,7 @@ export default function App() {
 
   }, []);
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Toaster
         position="top-right"
         reverseOrder={false}
@@ -55,8 +56,12 @@ export default function App() {
       <Routes>
 
         {/* ---------------- ADMIN ---------------- */}
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<UserLogin />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route
+          path="/admin/users/:id"
+          element={<UserDetails />}
+        />
         <Route path="/users" element={<Users />} />
         <Route path="/projects" element={<Projects />} />
         <Route path="/reports" element={<Reports />} />
@@ -72,7 +77,7 @@ export default function App() {
         />
 
         {/* ---------------- USER AUTH ---------------- */}
-        <Route path="/user/login" element={<UserLogin />} />
+
         <Route path="/user/signup" element={<Signup />} />
         <Route
           path="/user/forgot-password"
@@ -80,10 +85,33 @@ export default function App() {
         />
 
         {/* ---------------- USER PANEL ---------------- */}
-        <Route path="/user/home" element={<Home />} />
-        <Route path="/user/dashboard" element={<UserDashboard />} />
-        <Route path="/user/task/:id" element={<TaskDetails />} />
+        <Route
+          path="/user/home"
+          element={
+            <UserProtectedRoute>
+              <Home />
+            </UserProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/user/dashboard"
+          element={
+            <UserProtectedRoute>
+              <UserDashboard />
+            </UserProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/user/task/:id"
+          element={
+            <UserProtectedRoute>
+              <TaskDetails />
+            </UserProtectedRoute>
+          }
+        />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }

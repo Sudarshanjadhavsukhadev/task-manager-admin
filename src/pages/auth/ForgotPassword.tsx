@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./ForgotPassword.css";
+import { forgotPassword } from "../../services/auth.service";
 
 export default function ForgotPassword() {
 
-   console.log("ForgotPassword component rendered"); //
+  console.log("ForgotPassword component rendered"); //
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -17,28 +18,9 @@ export default function ForgotPassword() {
     try {
       setLoading(true);
 
-      const response = await fetch(
-        "http://localhost:5000/api/auth/forgot-password",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email }),
-        }
-      );
+      const res = await forgotPassword(email);
 
-      console.log(response);
-
-      const data = await response.json();
-
-      console.log(data);
-
-      if (!response.ok) {
-        throw new Error(data.message);
-      }
-
-      alert(data.message);
+      alert(res.message);
     } catch (err: any) {
       console.error(err);
       alert(err.message);
@@ -48,7 +30,7 @@ export default function ForgotPassword() {
   };
 
   return (
-    
+
     <div className="forgot-container">
       <div className="forgot-card">
 

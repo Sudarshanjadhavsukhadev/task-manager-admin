@@ -9,6 +9,10 @@ import AddProjectModal from "../../components/projects/AddProjectModal";
 export default function Projects() {
   const [openModal, setOpenModal] = useState(false);
 
+  const [activeFilter, setActiveFilter] = useState<
+    "incomplete" | "due" | "completed"
+  >("incomplete");
+
   return (
     <DashboardLayout>
       <div className="projects-page">
@@ -26,9 +30,17 @@ export default function Projects() {
           </button>
         </div>
 
-        <ProjectFilters />
+        <ProjectFilters
+          activeFilter={activeFilter}
+          setActiveFilter={setActiveFilter}
+          incompleteCount={0}
+          dueCount={0}
+          completedCount={0}
+        />
 
-        <ProjectTable />
+        <ProjectTable
+          activeFilter={activeFilter}
+        />
 
         <AddProjectModal
           open={openModal}

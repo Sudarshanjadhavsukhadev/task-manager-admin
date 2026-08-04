@@ -1,26 +1,33 @@
-const API_URL = "http://localhost:5000/api/auth";
+import { supabase } from "../lib/supabase";
 
 export const signup = async (
   fullName: string,
   email: string,
   password: string
 ) => {
-  const response = await fetch(`${API_URL}/signup`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      data: {
+        full_name: fullName,
+      },
     },
-    body: JSON.stringify({
-      fullName,
-      email,
-      password,
-    }),
   });
 
-  const data = await response.json();
+  if (error) throw error;
 
-  if (!response.ok) {
-    throw new Error(data.message);
+  if (data.user) {
+    const { error: profileError } = await supabase
+      .from("users")
+      .insert({
+        auth_id: data.user.id,
+        full_name: fullName,
+        email,
+        role: "user",
+      });
+
+    if (profileError) throw profileError;
   }
 
   return data;
@@ -30,49 +37,90 @@ export const login = async (
   email: string,
   password: string
 ) => {
-  const response = await fetch(`${API_URL}/login`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
+  const { data, error } =
+    await supabase.auth.signInWithPassword({
       email,
       password,
-    }),
-  });
+    });
 
-  const data = await response.json();
+  if (error) throw error;
 
-  if (!response.ok) {
-    throw new Error(data.message);
+  const { data: profile, error: profileError } =
+    await supabase
+      .from("users")
+      .select("*")
+      .eq("auth_id", data.user.id)
+      .single();
+
+  if (profileError) throw profileError;
+
+  if (!profile.role) {
+    throw new Error(
+      "User role not assigned. Contact administrator."
+    );
   }
 
-  return data;
+  return {
+    user: profile,
+    session: data.session,
+  };
 };
 
 export const adminLogin = async (
   email: string,
   password: string
 ) => {
-  const response = await fetch(
-    `${API_URL}/admin-login`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email,
-        password,
-      }),
-    }
-  );
+  console.log("========== ADMIN LOGIN ==========");
+  console.log("Email:", email);
+  console.log("Password:", password);
 
-  const data = await response.json();
+  const { data, error } =
+    await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
 
-  if (!response.ok) {
-    throw new Error(data.message);
+  if (error) {
+    console.log("LOGIN ERROR OBJECT:", error);
+    console.log("LOGIN ERROR MESSAGE:", error.message);
+    console.log("LOGIN ERROR STATUS:", error.status);
+
+    throw error;
   }
 
-  return data;
+  console.log("SUPABASE LOGIN SUCCESS");
+
+  const { data: profile, error: profileError } =
+    await supabase
+      .from("users")
+      .select("*")
+      .eq("auth_id", data.user.id)
+      .single();
+
+  if (profileError) throw profileError;
+
+  if (profile.role !== "admin") {
+    throw new Error("Access denied. Admin only.");
+  }
+
+  return {
+    user: profile,
+    session: data.session,
+  };
+};
+
+export const forgotPassword = async (
+  email: string
+) => {
+  const { error } =
+    await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo:
+        "https://sudarshanjadhavsukhadev.github.io/task-manager-admin/admin/reset-password?type=recovery",
+    });
+
+  if (error) throw error;
+
+  return {
+    message: "Password reset link sent successfully.",
+  };
 };

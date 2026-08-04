@@ -1,30 +1,30 @@
-const API_URL = "http://localhost:5000/api/vision";
+import { supabase } from "../lib/supabase";
 
+// Get Vision
 export const getVision = async () => {
-  const response = await fetch(API_URL);
+  const { data, error } = await supabase
+    .from("vision")
+    .select("*")
+    .single();
 
-  if (!response.ok) {
-    throw new Error("Failed to fetch vision");
-  }
+  if (error) throw error;
 
-  return response.json();
+  return data;
 };
 
+// Update Vision
 export const updateVision = async (
   id: string,
   body: any
 ) => {
-  const response = await fetch(`${API_URL}/${id}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(body),
-  });
+  const { data, error } = await supabase
+    .from("vision")
+    .update(body)
+    .eq("id", id)
+    .select()
+    .single();
 
-  if (!response.ok) {
-    throw new Error("Failed to update vision");
-  }
+  if (error) throw error;
 
-  return response.json();
+  return data;
 };

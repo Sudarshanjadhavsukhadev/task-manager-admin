@@ -23,9 +23,9 @@ export default function Signup() {
     try {
       setLoading(true);
 
-      const res = await signup(fullName, email, password);
+      await signup(fullName, email, password);
 
-      alert(res.message);
+      alert("Account created successfully!");
 
       navigate("/user/login");
     } catch (err: any) {

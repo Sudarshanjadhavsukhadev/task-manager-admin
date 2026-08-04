@@ -1,9 +1,15 @@
 import { useEffect, useState } from "react";
 import "./AddScheduleModal.css";
 
-import { createSchedule } from "../../services/schedule.service";
+
 import { getUsers } from "../../services/user.service";
 import toast from "react-hot-toast";
+import {
+  createSchedule,
+  getSchedules,
+  deleteSchedule,
+} from "../../services/schedule.service";
+import { Trash2 } from "lucide-react";
 
 type Props = {
   open: boolean;
@@ -17,19 +23,40 @@ export default function AddScheduleModal({
   const [meetingName, setMeetingName] = useState("");
   const [meetingDate, setMeetingDate] = useState("");
   const [meetingTime, setMeetingTime] = useState("");
+  const [endTime, setEndTime] = useState("");
   const [meetingPlace, setMeetingPlace] = useState("");
 
   const [users, setUsers] = useState<any[]>([]);
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
-
+  const [schedules, setSchedules] = useState<any[]>([]);
   useEffect(() => {
     loadUsers();
+    loadSchedules();
   }, []);
 
   async function loadUsers() {
     try {
       const data = await getUsers();
-      setUsers(data);
+
+      console.log("All Users:", data);
+
+      const onlyUsers = data.filter(
+        (user: any) => user.role === "user"
+      );
+
+      console.log("Only Users:", onlyUsers);
+
+      setUsers(onlyUsers);
+
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async function loadSchedules() {
+    try {
+      const data = await getSchedules();
+      setSchedules(data);
     } catch (err) {
       console.error(err);
     }
@@ -57,7 +84,9 @@ export default function AddScheduleModal({
       if (!meetingTime) {
         return toast.error("Meeting Time missing");
       }
-
+      if (!endTime) {
+        return toast.error("End Time missing");
+      }
       if (!meetingPlace) {
         return toast.error("Meeting Place missing");
       }
@@ -70,23 +99,46 @@ export default function AddScheduleModal({
         meeting_name: meetingName,
         meeting_date: meetingDate,
         start_time: meetingTime,
+        end_time: endTime,
         location: meetingPlace,
         assigned_users: selectedUsers,
       });
 
       toast.success("Schedule Added");
 
+      await loadSchedules();
+
       setMeetingName("");
       setMeetingDate("");
       setMeetingTime("");
+      setEndTime("");
       setMeetingPlace("");
       setSelectedUsers([]);
 
-      onClose();
+
 
     } catch (err) {
       console.error(err);
       toast.error("Failed to add schedule");
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    const confirmDelete = window.confirm(
+      "Delete this schedule?"
+    );
+
+    if (!confirmDelete) return;
+
+    try {
+      await deleteSchedule(id);
+
+      toast.success("Schedule deleted");
+
+      loadSchedules();
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to delete schedule");
     }
   };
 
@@ -106,87 +158,159 @@ export default function AddScheduleModal({
 
         <div className="schedule-body">
 
-          <input
-            type="text"
-            placeholder="Meeting Name"
-            value={meetingName}
-            onChange={(e) =>
-              setMeetingName(e.target.value)
-            }
-          />
+          <div className="form-group">
+            <label>Meeting Name</label>
+
+            <input
+              type="text"
+              placeholder="Enter meeting name"
+              value={meetingName}
+              onChange={(e) => setMeetingName(e.target.value)}
+            />
+          </div>
 
           <div className="schedule-row">
 
-            <input
-              type="date"
-              value={meetingDate}
-              onChange={(e) =>
-                setMeetingDate(e.target.value)
-              }
-            />
+            <div className="form-group">
+              <label>Meeting Date</label>
 
-            <input
-              type="time"
-              value={meetingTime}
-              onChange={(e) =>
-                setMeetingTime(e.target.value)
-              }
-            />
+              <input
+                type="date"
+                value={meetingDate}
+                onChange={(e) => setMeetingDate(e.target.value)}
+              />
+            </div>
+
+            <div className="form-group">
+              <label>Start Time</label>
+
+              <input
+                type="time"
+                value={meetingTime}
+                onChange={(e) => setMeetingTime(e.target.value)}
+              />
+            </div>
+
+            <div className="form-group">
+              <label>End Time</label>
+
+              <input
+                type="time"
+                value={endTime}
+                onChange={(e) => setEndTime(e.target.value)}
+              />
+            </div>
 
           </div>
 
-          <input
-            type="text"
-            placeholder="Meeting Place"
-            value={meetingPlace}
-            onChange={(e) =>
-              setMeetingPlace(e.target.value)
-            }
-          />
+          <div className="form-group">
+            <label>Meeting Location</label>
 
-          <label>
-            Select Users
+            <input
+              type="text"
+              placeholder="Enter meeting location"
+              value={meetingPlace}
+              onChange={(e) => setMeetingPlace(e.target.value)}
+            />
+          </div>
+
+          <label className="users-label">
+            Assign Users
           </label>
 
           <div className="users-list">
 
-            {users.map((user) => (
+            {users
+              .filter((user) => user.role === "user")
+              .map((user) => (
 
-              <label
-                key={user.id}
-                className="user-item"
-              >
+                <label
+                  key={user.id}
+                  className="user-item"
+                >
 
-                <input
-                  type="checkbox"
-                  checked={selectedUsers.includes(user.id)}
-                  onChange={(e) => {
+                  <input
+                    type="checkbox"
+                    checked={selectedUsers.includes(user.id)}
+                    onChange={(e) => {
 
-                    if (e.target.checked) {
+                      if (e.target.checked) {
 
-                      setSelectedUsers([
-                        ...selectedUsers,
-                        user.id,
-                      ]);
+                        setSelectedUsers([
+                          ...selectedUsers,
+                          user.id,
+                        ]);
 
-                    } else {
+                      } else {
 
-                      setSelectedUsers(
-                        selectedUsers.filter(
-                          (id) => id !== user.id
-                        )
-                      );
+                        setSelectedUsers(
+                          selectedUsers.filter(
+                            (id) => id !== user.id
+                          )
+                        );
 
-                    }
+                      }
 
-                  }}
-                />
+                    }}
+                  />
 
-                <span>{user.full_name}</span>
+                  <span>{user.full_name}</span>
 
-              </label>
+                </label>
 
-            ))}
+              ))}
+
+          </div>
+
+          <h3 className="previous-title">
+            Previous Schedules
+          </h3>
+
+          <div className="previous-schedules">
+
+            {schedules.length === 0 ? (
+
+              <p>No schedules found.</p>
+
+            ) : (
+
+              schedules.map((schedule) => (
+
+                <div
+                  key={schedule.id}
+                  className="schedule-card"
+                >
+
+                  <div className="schedule-top">
+
+                    <div>
+
+                      <h4>{schedule.meeting_name}</h4>
+
+                      <p>📅 {schedule.meeting_date}</p>
+
+                      <p>
+                        🕒 {schedule.start_time} - {schedule.end_time}
+                      </p>
+
+                      <p>📍 {schedule.location}</p>
+
+                    </div>
+
+                    <button
+                      className="delete-schedule-btn"
+                      onClick={() => handleDelete(schedule.id)}
+                    >
+                      <Trash2 size={18} />
+                    </button>
+
+                  </div>
+
+                </div>
+
+              ))
+
+            )}
 
           </div>
 

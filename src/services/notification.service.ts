@@ -1,5 +1,6 @@
 import { getToken } from "firebase/messaging";
 import { messaging } from "../firebase/firebase";
+import { supabase } from "../lib/supabase";
 
 // Existing FCM function
 export async function getFCMToken() {
@@ -9,9 +10,17 @@ export async function getFCMToken() {
     const permission = await Notification.requestPermission();
     console.log("Permission:", permission);
 
+    const registration = await navigator.serviceWorker.register(
+      "/firebase-messaging-sw.js"
+    );
+
+    // Wait until the service worker is active
+    await navigator.serviceWorker.ready;
+
     const token = await getToken(messaging, {
       vapidKey:
         "BNXN3l_oLzHcLrFAa3SyH5_HQl0Xd1Glle4pZxTwQ9XLEgyGYIeOImDsMCiV3awF3kdizRyR9LMXF_X1U-4MX58",
+      serviceWorkerRegistration: registration,
     });
 
     console.log("TOKEN =", token);
@@ -27,33 +36,35 @@ export async function getFCMToken() {
 }
 
 // ADD THIS BELOW
-const API_URL = "http://localhost:5000/api/notifications";
+
 
 export const getNotifications = async (
   userId: string
 ) => {
-  const res = await fetch(`${API_URL}/${userId}`);
+  const { data, error } = await supabase
+    .from("notifications")
+    .select("*")
+    .eq("user_id", userId)
+    .order("created_at", { ascending: false });
 
-  if (!res.ok) {
-    throw new Error("Failed to load notifications");
-  }
+  if (error) throw error;
 
-  return res.json();
+  return data;
 };
 
 export const markNotificationAsRead = async (
   id: string
 ) => {
-  const res = await fetch(
-    `${API_URL}/${id}/read`,
-    {
-      method: "PUT",
-    }
-  );
+  const { data, error } = await supabase
+    .from("notifications")
+    .update({
+      is_read: true,
+    })
+    .eq("id", id)
+    .select()
+    .single();
 
-  if (!res.ok) {
-    throw new Error("Failed to update notification");
-  }
+  if (error) throw error;
 
-  return res.json();
+  return data;
 };

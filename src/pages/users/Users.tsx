@@ -10,17 +10,35 @@ import { getUsers } from "../../services/user.service";
 
 export default function Users() {
 
-  
 
-  const [users, setUsers] = useState([]);
+
+  const [users, setUsers] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchUsers();
   }, []);
 
   const fetchUsers = async () => {
-    const data = await getUsers();
-    setUsers(data);
+
+    try {
+
+      setLoading(true);
+
+      const data = await getUsers();
+
+      setUsers(data);
+
+    } catch (err) {
+
+      console.error(err);
+
+    } finally {
+
+      setLoading(false);
+
+    }
+
   };
 
   return (
@@ -38,13 +56,27 @@ export default function Users() {
 
           </div>
 
-          
+
 
         </div>
 
         <UserFilters />
 
-        <UserTable users={users} />
+        {loading ? (
+
+          <div className="loading-users">
+
+            <div className="loader"></div>
+
+            <p>Loading users...</p>
+
+          </div>
+
+        ) : (
+
+          <UserTable users={users} />
+
+        )}
 
 
 

@@ -5,7 +5,7 @@ import {
 } from "firebase/messaging";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCsBwplrVjPtEm1DaFoeOzcWGq2ObeNG08",
+ apiKey: "AIzaSyCsBwpLrVjPtEm1DaFoeOzcWGq2ObeNG08",
   authDomain: "task-manager-7ebf5.firebaseapp.com",
   projectId: "task-manager-7ebf5",
   storageBucket: "task-manager-7ebf5.firebasestorage.app",

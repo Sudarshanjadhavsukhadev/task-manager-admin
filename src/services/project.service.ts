@@ -1,77 +1,103 @@
-const API_URL = "http://localhost:5000/api/projects";
+import { supabase } from "../lib/supabase";
+
+
 
 export const createProject = async (project: any) => {
-  const response = await fetch(API_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(project),
-  });
+  // Create Project
+  const { data, error } = await supabase
+    .from("projects")
+    .insert([project])
+    .select()
+    .single();
 
-  const data = await response.json();
+  if (error) {
+    throw error;
+  }
 
-  if (!response.ok) {
-    throw new Error(data.message);
+  // Save Notification
+  const { error: notificationError } = await supabase
+    .from("notifications")
+    .insert([
+      {
+        user_id: data.assigned_user_id,
+        task_id: data.id,
+        title: "📌 New Task Assigned",
+        message: `You have been assigned: ${data.project_name}`,
+        is_read: false,
+      },
+    ]);
+
+  if (notificationError) {
+    console.error("Notification Error:", notificationError);
+    throw notificationError;
   }
 
   return data;
 };
 
 export const getProjects = async () => {
-  const response = await fetch(API_URL);
+  const { data, error } = await supabase
+    .from("projects")
+    .select("*")
+    .order("created_at", {
+      ascending: false,
+    });
 
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.message);
+  if (error) {
+    throw error;
   }
 
   return data;
 };
 
 export const getProjectsByUser = async (userId: string) => {
-  const response = await fetch(
-    `${API_URL}/user/${userId}`
-  );
+  const { data, error } = await supabase
+    .from("projects")
+    .select("*")
+    .eq("assigned_user_id", userId)
+    .order("created_at", { ascending: false });
 
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.message);
-  }
+  if (error) throw error;
 
   return data;
 };
 
 export const completeTask = async (id: string) => {
-  const response = await fetch(
-    `${API_URL}/${id}/complete`,
-    {
-      method: "PUT", // Use PATCH here if your backend route uses router.patch(...)
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
+  const { data, error } = await supabase
+    .from("projects")
+    .update({
+     status: "Completed",
+    })
+    .eq("id", id)
+    .select()
+    .single();
 
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.message);
-  }
+  if (error) throw error;
 
   return data;
 };
 
 export const getTaskById = async (id: string) => {
-  const response = await fetch(`${API_URL}/${id}`);
+  const { data, error } = await supabase
+    .from("projects")
+    .select("*")
+    .eq("id", id)
+    .single();
 
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.message);
-  }
+  if (error) throw error;
 
   return data;
+};
+
+export const deleteProject = async (id: string) => {
+  const { error } = await supabase
+    .from("projects")
+    .delete()
+    .eq("id", id);
+
+  if (error) {
+    throw error;
+  }
+
+  return true;
 };

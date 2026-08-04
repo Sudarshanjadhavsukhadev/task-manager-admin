@@ -1,13 +1,14 @@
-const API_URL = "http://localhost:5000/api/users";
+import { supabase } from "../lib/supabase";
 
+// Get all users
 export const getUsers = async () => {
-  const response = await fetch(API_URL);
+  const { data, error } = await supabase
+    .from("users")
+    .select("*");
 
-  if (!response.ok) {
-    throw new Error("Failed to fetch users");
-  }
+  if (error) throw error;
 
-  return response.json();
+  return data;
 };
 
 // Save Firebase Token
@@ -15,22 +16,27 @@ export const updateUserFCMToken = async (
   userId: string,
   token: string
 ) => {
-  const response = await fetch(
-    `${API_URL}/${userId}/fcm-token`,
-    {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        token: token,
-      })
-    }
-  );
+  const { data, error } = await supabase
+    .from("users")
+    .update({
+      fcm_token: token,
+    })
+    .eq("id", userId)
+    .select()
+    .single();
 
-  if (!response.ok) {
-    throw new Error("Failed to save FCM Token");
-  }
+  if (error) throw error;
 
-  return response.json();
+  return data;
+};
+
+export const deleteUser = async (id: string) => {
+
+  const { error } = await supabase
+    .from("users")
+    .delete()
+    .eq("id", id);
+
+  if (error) throw error;
+
 };

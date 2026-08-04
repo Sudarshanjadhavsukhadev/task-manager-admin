@@ -1,5 +1,7 @@
 import "./TaskChart.css";
 
+import { useEffect, useState } from "react";
+
 import {
   PieChart,
   Pie,
@@ -8,15 +10,89 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const data = [
-  { name: "Completed", value: 60 },
-  { name: "Pending", value: 25 },
-  { name: "Overdue", value: 15 },
-];
+import { getProjects } from "../../services/project.service";
 
 const COLORS = ["#2563EB", "#F59E0B", "#EF4444"];
 
 export default function TaskChart() {
+
+  const [data, setData] = useState([
+    {
+      name: "Completed",
+      value: 0,
+    },
+    {
+      name: "Pending",
+      value: 0,
+    },
+    {
+      name: "Overdue",
+      value: 0,
+    },
+  ]);
+
+  useEffect(() => {
+    loadChart();
+  }, []);
+
+  const loadChart = async () => {
+
+    try {
+
+      const projects = await getProjects();
+
+      const completed = projects.filter(
+        (p) => p.status === "Completed"
+      ).length;
+
+      const pending = projects.filter((p) => {
+
+        return (
+          p.status !== "Completed" &&
+          new Date(p.created_at).toDateString() ===
+            new Date().toDateString()
+        );
+
+      }).length;
+
+      const overdue = projects.filter((p) => {
+
+        const created = new Date(p.created_at);
+
+        const dueTime = new Date(
+          created.getTime() + 24 * 60 * 60 * 1000
+        );
+
+        return (
+          p.status !== "Completed" &&
+          new Date() > dueTime
+        );
+
+      }).length;
+
+      setData([
+        {
+          name: "Completed",
+          value: completed,
+        },
+        {
+          name: "Pending",
+          value: pending,
+        },
+        {
+          name: "Overdue",
+          value: overdue,
+        },
+      ]);
+
+    } catch (err) {
+
+      console.error(err);
+
+    }
+
+  };
+
   return (
     <div className="task-chart">
 
@@ -27,11 +103,17 @@ export default function TaskChart() {
       </div>
 
       <div className="chart-wrapper">
-        <ResponsiveContainer width="100%" height="100%">
+
+        <ResponsiveContainer
+          width="100%"
+          height="100%"
+        >
           <PieChart>
+
             <Pie
               data={data}
               dataKey="value"
+              nameKey="name"
               innerRadius={65}
               outerRadius={110}
               paddingAngle={4}
@@ -45,29 +127,36 @@ export default function TaskChart() {
             </Pie>
 
             <Tooltip />
+
           </PieChart>
         </ResponsiveContainer>
+
       </div>
 
       <div className="chart-legend">
 
-        <div className="legend-item">
-          <span className="legend-dot completed"></span>
-          Completed
-        </div>
+        {data.map((item) => (
 
-        <div className="legend-item">
-          <span className="legend-dot pending"></span>
-          Pending
-        </div>
+          <div
+            key={item.name}
+            className="legend-item"
+          >
 
-        <div className="legend-item">
-          <span className="legend-dot overdue"></span>
-          Overdue
-        </div>
+            <span
+              className={`legend-dot ${
+                item.name.toLowerCase()
+              }`}
+            ></span>
+
+            {item.name} ({item.value})
+
+          </div>
+
+        ))}
 
       </div>
 
     </div>
   );
+
 }

@@ -1,27 +1,26 @@
-const API_URL = "http://localhost:5000/api/goals";
+import { supabase } from "../lib/supabase";
 
+// Get All Goals
 export const getGoals = async () => {
-  const response = await fetch(API_URL);
+  const { data, error } = await supabase
+    .from("goals")
+    .select("*")
+    .order("created_at", { ascending: false });
 
-  if (!response.ok) {
-    throw new Error("Failed to fetch goals");
-  }
+  if (error) throw error;
 
-  return response.json();
+  return data;
 };
 
+// Create Goal
 export const createGoal = async (body: any) => {
-  const response = await fetch(API_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(body),
-  });
+  const { data, error } = await supabase
+    .from("goals")
+    .insert([body])
+    .select()
+    .single();
 
-  if (!response.ok) {
-    throw new Error("Failed to create goal");
-  }
+  if (error) throw error;
 
-  return response.json();
+  return data;
 };

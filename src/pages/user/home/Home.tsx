@@ -7,7 +7,7 @@ import TopBar from "./components/TopBar";
 import SearchBar from "./components/SearchBar";
 import WelcomeCard from "./components/WelcomeCard";
 import TaskList from "./components/TaskList";
-import ProjectCarousel from "./components/ProjectCarousel";
+
 import BottomNavigation from "./components/BottomNavigation";
 import ProgressCard from "./components/ProgressCard";
 import UpcomingSchedule from "./components/UpcomingSchedule";
@@ -23,18 +23,17 @@ export default function Home() {
 
   // Load Tasks
   const loadTasks = async () => {
-    const user = JSON.parse(
-      localStorage.getItem("user") || "{}"
-    );
+    const user = JSON.parse(localStorage.getItem("user") || "{}");
+
+    console.log("Logged User:", user);
+    console.log("Logged User ID:", user.id);
 
     if (!user.id) return;
 
     try {
-      console.log("Logged User:", user);
-
       const data = await getProjectsByUser(user.id);
 
-      console.log("Tasks:", data);
+      console.log("Projects from Supabase:", data);
 
       setTasks(data);
     } catch (err) {

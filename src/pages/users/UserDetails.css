@@ -1,0 +1,460 @@
+.user-details-page{
+    padding:35px;
+    animation:fadeIn .35s ease;
+}
+
+/* ---------------- Back Button ---------------- */
+
+.back-button{
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    border:none;
+    background:white;
+
+    padding:12px 22px;
+
+    border-radius:14px;
+
+    font-size:15px;
+    font-weight:600;
+
+    cursor:pointer;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+
+    transition:.3s;
+}
+
+.back-button:hover{
+    transform:translateY(-2px);
+    box-shadow:0 15px 35px rgba(37,99,235,.15);
+}
+
+/* ---------------- Profile ---------------- */
+
+.user-profile{
+    margin-top:30px;
+
+    display:flex;
+    align-items:center;
+    gap:25px;
+
+    background:#fff;
+
+    padding:28px;
+
+    border-radius:24px;
+
+    box-shadow:0 12px 30px rgba(15,23,42,.06);
+}
+
+.profile-avatar{
+    width:90px;
+    height:90px;
+
+    border-radius:24px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-size:38px;
+    font-weight:700;
+
+    color:white;
+
+    background:linear-gradient(135deg,#2563eb,#60a5fa);
+
+    box-shadow:0 15px 35px rgba(37,99,235,.25);
+}
+
+.profile-info h1{
+    margin:0;
+    font-size:32px;
+    color:#111827;
+}
+
+.profile-info p{
+    margin-top:8px;
+    color:#64748b;
+    font-size:16px;
+}
+
+/* ---------------- Progress ---------------- */
+
+.progress-section{
+    margin-top:30px;
+
+    background:white;
+
+    padding:25px;
+
+    border-radius:24px;
+
+    box-shadow:0 12px 30px rgba(15,23,42,.06);
+}
+
+.progress-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    margin-bottom:18px;
+}
+
+.progress-header span{
+    font-size:20px;
+    font-weight:700;
+}
+
+.progress-header strong{
+    color:#2563eb;
+    font-size:26px;
+}
+
+.user-progress-bar{
+    width:100%;
+    height:14px;
+    background:#e5e7eb;
+    border-radius:100px;
+    overflow:hidden;
+}
+
+.user-progress-fill{
+    height:100%;
+    border-radius:100px;
+    background:linear-gradient(
+        90deg,
+        #2563eb,
+        #60a5fa
+    );
+}
+
+/* ---------------- Statistics ---------------- */
+
+.stats-grid{
+    margin-top:30px;
+
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+
+    gap:22px;
+}
+
+.stat-card{
+    background:white;
+
+    border-radius:20px;
+
+    padding:24px;
+
+    text-align:center;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.06);
+
+    transition:.3s;
+}
+
+.stat-card:hover{
+    transform:translateY(-6px);
+}
+
+.stat-card svg{
+    color:#2563eb;
+    margin-bottom:15px;
+}
+
+.stat-card h2{
+    margin:0;
+    font-size:34px;
+}
+
+.stat-card span{
+    display:block;
+    margin-top:8px;
+    color:#64748b;
+}
+
+/* ---------------- Search ---------------- */
+
+.search-box{
+    margin-top:35px;
+
+    position:relative;
+
+    max-width:500px;
+}
+
+.search-box svg{
+    position:absolute;
+
+    top:50%;
+    left:18px;
+
+    transform:translateY(-50%);
+
+    color:#94a3b8;
+}
+
+.search-box input{
+    width:100%;
+    height:56px;
+
+    border:none;
+    outline:none;
+
+    border-radius:16px;
+
+    background:white;
+
+    padding-left:52px;
+
+    font-size:15px;
+
+    box-shadow:0 10px 25px rgba(15,23,42,.06);
+}
+
+.search-box input:focus{
+    box-shadow:
+        0 0 0 4px rgba(37,99,235,.12),
+        0 15px 35px rgba(37,99,235,.18);
+}
+
+/* ---------------- Filter Buttons ---------------- */
+
+.filter-buttons{
+    display:flex;
+    gap:18px;
+
+    margin-top:25px;
+    margin-bottom:30px;
+}
+
+.filter-buttons button{
+    border:none;
+
+    padding:12px 26px;
+
+    border-radius:14px;
+
+    background:white;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+    transition:.3s;
+
+    box-shadow:0 10px 25px rgba(15,23,42,.05);
+}
+
+.filter-buttons button:hover{
+    transform:translateY(-3px);
+}
+
+.filter-buttons .active{
+    background:#2563eb;
+    color:white;
+}
+
+/* ---------------- Table ---------------- */
+
+.table-card{
+    background:white;
+
+    border-radius:24px;
+
+    overflow:hidden;
+
+    box-shadow:0 12px 30px rgba(15,23,42,.06);
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+thead{
+    background:#f8fafc;
+}
+
+th{
+    padding:18px;
+    text-align:left;
+
+    font-size:15px;
+    font-weight:700;
+
+    color:#475569;
+}
+
+td{
+    padding:18px;
+
+    border-top:1px solid #eef2f7;
+
+    color:#111827;
+}
+
+tbody tr{
+    transition:.25s;
+}
+
+tbody tr:hover{
+    background:#f8fbff;
+}
+
+.view-project-btn{
+    border:none;
+
+    background:#2563eb;
+
+    color:white;
+
+    padding:10px 20px;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.view-project-btn:hover{
+    background:#1d4ed8;
+}
+
+/* ---------------- Responsive ---------------- */
+
+@media(max-width:1200px){
+
+.stats-grid{
+    grid-template-columns:repeat(2,1fr);
+}
+
+}
+
+@media(max-width:768px){
+
+.user-profile{
+    flex-direction:column;
+    text-align:center;
+}
+
+.stats-grid{
+    grid-template-columns:1fr;
+}
+
+.filter-buttons{
+    flex-wrap:wrap;
+}
+
+}
+
+/* ---------------- Animation ---------------- */
+
+@keyframes fadeIn{
+
+from{
+opacity:0;
+transform:translateY(15px);
+}
+
+to{
+opacity:1;
+transform:translateY(0);
+}
+
+}
+.priority-section{
+    margin-top:40px;
+}
+
+.priority-section h2{
+    margin-bottom:18px;
+    font-size:24px;
+    font-weight:700;
+}
+
+.high-title{
+    color:#dc2626;
+}
+
+.medium-title{
+    color:#d97706;
+}
+
+.low-title{
+    color:#16a34a;
+}
+/* ================= Analytics ================= */
+
+.analytics-section{
+    margin-top:45px;
+
+    display:grid;
+    grid-template-columns:1.2fr .8fr;
+
+    gap:30px;
+}
+
+.analytics-card,
+.summary-card{
+
+    background:white;
+
+    border-radius:24px;
+
+    padding:30px;
+
+    box-shadow:0 15px 35px rgba(15,23,42,.06);
+}
+
+.analytics-card h2,
+.summary-card h2{
+
+    margin-bottom:25px;
+
+    font-size:24px;
+
+    color:#111827;
+}
+
+.summary-item{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:16px 0;
+
+    border-bottom:1px solid #eef2f7;
+
+    font-size:16px;
+}
+
+.summary-item:last-child{
+
+    border-bottom:none;
+}
+
+.summary-item strong{
+
+    color:#2563eb;
+
+    font-size:22px;
+}
+
+@media(max-width:1000px){
+
+.analytics-section{
+
+grid-template-columns:1fr;
+
+}
+
+}

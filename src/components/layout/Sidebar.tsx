@@ -1,12 +1,12 @@
 import "./Sidebar.css";
-import { NavLink } from "react-router-dom";
-
+import { NavLink, useNavigate } from "react-router-dom";
+import { supabase } from "../../lib/supabase";
 import {
     LayoutDashboard,
     Users,
     FolderKanban,
     CheckSquare,
-    Calendar,
+
     BarChart3,
     Settings,
     LogOut,
@@ -33,11 +33,7 @@ const menu = [
         label: "Vision",
         path: "/vision",
     },
-    {
-        icon: Calendar,
-        label: "Calendar",
-        path: "/calendar",
-    },
+
     {
         icon: BarChart3,
         label: "Reports",
@@ -51,6 +47,23 @@ const menu = [
 ];
 
 export default function Sidebar() {
+
+    const navigate = useNavigate();
+
+    const handleLogout = async () => {
+        const confirmLogout = window.confirm(
+            "Are you sure you want to logout?"
+        );
+
+        if (!confirmLogout) return;
+
+        await supabase.auth.signOut();
+
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+
+        navigate("/");
+    };
     return (
         <aside className="sidebar">
             <div className="sidebar-logo">
@@ -79,7 +92,10 @@ export default function Sidebar() {
             </nav>
 
             <div className="sidebar-footer">
-                <button className="logout-btn">
+                <button
+                    className="logout-btn"
+                    onClick={handleLogout}
+                >
                     <LogOut size={22} />
                     <span>Logout</span>
                 </button>

@@ -17,14 +17,17 @@ export default function TodaySchedule() {
 
       const data = await getSchedules();
 
-      const today = new Date()
-        .toISOString()
-        .split("T")[0];
+      const todaySchedules = data.filter((schedule: any) => {
 
-      const todaySchedules = data.filter(
-        (schedule: any) =>
-          schedule.meeting_date === today
-      );
+        const created = new Date(schedule.created_at);
+
+        const hours =
+          (Date.now() - created.getTime()) /
+          (1000 * 60 * 60);
+
+        return hours < 24;
+
+      });
 
       setSchedules(todaySchedules);
 
@@ -57,9 +60,20 @@ export default function TodaySchedule() {
 
             <h3>{schedule.meeting_name}</h3>
 
-            <p>🕒 {schedule.start_time}</p>
+            <p>
+              🕒 {schedule.start_time} - {schedule.end_time}
+            </p>
 
             <p>📍 {schedule.location}</p>
+
+            <p>
+              📅 {new Date(schedule.created_at).toLocaleString("en-GB", {
+                day: "2-digit",
+                month: "short",
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
+            </p>
 
           </div>
 

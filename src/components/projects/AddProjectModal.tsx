@@ -27,7 +27,7 @@ export default function AddProjectModal({
 
   const [assignedUser, setAssignedUser] = useState("");
   const [users, setUsers] = useState<any[]>([]);
-  const [filteredUsers, setFilteredUsers] = useState<any[]>([]);
+
   const [assignedUserId, setAssignedUserId] = useState("");
 
 
@@ -38,9 +38,11 @@ export default function AddProjectModal({
       try {
         const data = await getUsers();
 
-        console.log("First User:", data[0]);
+        const onlyUsers = data.filter(
+          (user: any) => user.role === "user"
+        );
 
-        setUsers(data);
+        setUsers(onlyUsers);
       } catch (err) {
         console.error(err);
       }
@@ -239,33 +241,35 @@ export default function AddProjectModal({
 
               <div className="user-list">
 
-                {users.map((user: any) => (
+                {users
+                  .filter((user: any) => user.role === "user")
+                  .map((user: any) => (
 
-                  <div
-                    key={user.id}
-                    className={`user-card ${assignedUserId === user.id ? "selected" : ""
-                      }`}
-                    onClick={() => {
-                      setAssignedUser(user.full_name);
-                      setAssignedUserId(user.id);
-                    }}
-                  >
+                    <div
+                      key={user.id}
+                      className={`user-card ${assignedUserId === user.id ? "selected" : ""
+                        }`}
+                      onClick={() => {
+                        setAssignedUser(user.full_name);
+                        setAssignedUserId(user.id);
+                      }}
+                    >
 
-                    <div className="user-avatar">
-                      {user.full_name.charAt(0)}
+                      <div className="user-avatar">
+                        {user.full_name.charAt(0)}
+                      </div>
+
+                      <div className="user-info">
+
+                        <h4>{user.full_name}</h4>
+
+                        <p>{user.email}</p>
+
+                      </div>
+
                     </div>
 
-                    <div className="user-info">
-
-                      <h4>{user.full_name}</h4>
-
-                      <p>{user.email}</p>
-
-                    </div>
-
-                  </div>
-
-                ))}
+                  ))}
 
               </div>
 

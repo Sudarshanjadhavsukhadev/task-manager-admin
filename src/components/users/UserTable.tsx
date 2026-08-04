@@ -1,5 +1,6 @@
 import "./UserTable.css";
 import { Pencil, Trash2 } from "lucide-react";
+import { deleteUser } from "../../services/user.service";
 
 interface UserTableProps {
   users: any[];
@@ -8,6 +9,29 @@ interface UserTableProps {
 export default function UserTable({
   users,
 }: UserTableProps) {
+
+  const handleDelete = async (id: string) => {
+
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this user?"
+    );
+
+    if (!confirmDelete) return;
+
+    try {
+
+      await deleteUser(id);
+
+      alert("User deleted successfully.");
+
+      window.location.reload();
+
+    } catch (err) {
+      console.error(err);
+      alert("Failed to delete user.");
+    }
+
+  };
   return (
     <div className="user-table-card">
       <table className="user-table">
@@ -47,7 +71,10 @@ export default function UserTable({
                   <Pencil size={18} />
                 </button>
 
-                <button className="delete">
+                <button
+                  className="delete"
+                  onClick={() => handleDelete(user.id)}
+                >
                   <Trash2 size={18} />
                 </button>
               </td>

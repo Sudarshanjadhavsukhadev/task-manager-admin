@@ -47,7 +47,7 @@ export default function TopBar() {
     const channel = subscribeNotifications(
       currentUser.id,
       async (notification) => {
-
+        console.log("🔥 REALTIME RECEIVED:", notification);
         console.log(notification);
 
         setNotifications((prev) => [

@@ -8,6 +8,16 @@ import { updateUserFCMToken } from "../../../services/user.service";
 export default function Login() {
   const navigate = useNavigate();
 
+  useEffect(() => {
+
+    const user = localStorage.getItem("user");
+
+    if (user) {
+      navigate("/user/home");
+    }
+
+  }, [navigate]);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -30,14 +40,15 @@ export default function Login() {
       console.log("FCM Token:", token);
 
       // Save Login
+      // Save Login
       localStorage.setItem(
         "token",
-        res.data.session.access_token
+        res.session.access_token
       );
 
       localStorage.setItem(
         "user",
-        JSON.stringify(res.data.user)
+        JSON.stringify(res.user)
       );
 
       // Save FCM Token
@@ -45,18 +56,37 @@ export default function Login() {
         console.log("Saving token to backend...");
 
         const result = await updateUserFCMToken(
-          res.data.user.id,
+          res.user.id,
           token
         );
 
         console.log("Backend Response:", result);
-      } else {
+      }
+      else {
         console.log("No FCM token received");
       }
 
       alert("Login Successful!");
 
-      navigate("/user/home");
+      if (res.user.role === "admin") {
+
+        localStorage.setItem(
+          "admin",
+          JSON.stringify(res.user)
+        );
+
+        navigate("/dashboard");
+
+      } else {
+
+        localStorage.setItem(
+          "user",
+          JSON.stringify(res.user)
+        );
+
+        navigate("/user/home");
+
+      }
 
     } catch (err: any) {
       alert(err.message);

@@ -5,6 +5,23 @@ type Props = {
 };
 
 export default function TodayTasks({ tasks }: Props) {
+
+  // Show only incomplete tasks
+  const now = new Date();
+
+  const todayTasks = tasks.filter((task) => {
+
+    if (task.status === "Completed") return false;
+
+    const created = new Date(task.created_at);
+
+    const hours =
+      (now.getTime() - created.getTime()) /
+      (1000 * 60 * 60);
+
+    return hours < 24;
+  });
+
   return (
     <div className="today-tasks">
 
@@ -12,10 +29,10 @@ export default function TodayTasks({ tasks }: Props) {
 
       <div className="tasks-scroll">
 
-        {tasks.length === 0 ? (
-          <p>No tasks available.</p>
+        {todayTasks.length === 0 ? (
+          <p>No pending tasks.</p>
         ) : (
-          tasks.map((task) => (
+          todayTasks.map((task) => (
             <div
               key={task.id}
               className="today-task-card"

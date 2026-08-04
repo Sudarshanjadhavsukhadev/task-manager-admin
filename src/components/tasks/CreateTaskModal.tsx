@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./CreateTaskModal.css";
-
+import { createTask } from "../../services/task.service";
 import StepIndicator from "./StepIndicator";
 import StepTaskName from "./StepTaskName";
 import StepDepartment from "./StepDepartment";
@@ -38,27 +38,32 @@ export default function CreateTaskModal({
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [dueDate, setDueDate] = useState("");
 
-  const handleSubmit = () => {
-    console.log({
-      taskName,
-      department,
-      priority,
-      urgent,
-      selectedUser,
-      dueDate,
-    });
+  const handleSubmit = async () => {
+    try {
+      await createTask({
+        title: taskName,
+        department,
+        priority,
+        urgent,
+        assignedTo: selectedUser?.id,
+        dueDate,
+      });
 
-    alert("Task Created Successfully!");
+      alert("Task Created Successfully!");
 
-    onClose();
+      onClose();
 
-    setStep(1);
-    setTaskName("");
-    setDepartment("");
-    setPriority("");
-    setUrgent(null);
-    setSelectedUser(null);
-    setDueDate("");
+      setStep(1);
+      setTaskName("");
+      setDepartment("");
+      setPriority("");
+      setUrgent(null);
+      setSelectedUser(null);
+      setDueDate("");
+    } catch (err) {
+      console.error(err);
+      alert("Failed to create task");
+    }
   };
 
   return (
