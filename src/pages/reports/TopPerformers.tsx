@@ -1,39 +1,189 @@
 import "./TopPerformers.css";
 import { Trophy } from "lucide-react";
+import { useEffect, useState } from "react";
 
-const performers = [
-  {
-    rank: 1,
-    name: "Mayur",
-    role: "Project Manager",
-    completed: 96,
-    efficiency: "98%",
-  },
-  {
-    rank: 2,
-    name: "Rahul",
-    role: "Frontend Developer",
-    completed: 88,
-    efficiency: "95%",
-  },
-  {
-    rank: 3,
-    name: "Sneha",
-    role: "UI/UX Designer",
-    completed: 84,
-    efficiency: "93%",
-  },
-  {
-    rank: 4,
-    name: "Amit",
-    role: "Backend Developer",
-    completed: 79,
-    efficiency: "90%",
-  },
-];
+import { getUsers } from "../../services/user.service";
+import { getProjects } from "../../services/project.service";
+import { supabase } from "../../lib/supabase";
+
+interface Performer {
+  id: string;
+  name: string;
+  role: string;
+  assigned: number;
+  completed: number;
+  efficiency: number;
+}
 
 export default function TopPerformers() {
+
+  const [performers, setPerformers] = useState<Performer[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+
+    loadPerformers();
+
+    // Realtime project updates
+    const projectChannel = supabase
+      .channel("top-performers-projects")
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "projects",
+        },
+        () => {
+          loadPerformers();
+        }
+      )
+      .subscribe();
+
+    // Realtime user updates
+    const userChannel = supabase
+      .channel("top-performers-users")
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "users",
+        },
+        () => {
+          loadPerformers();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(projectChannel);
+      supabase.removeChannel(userChannel);
+    };
+
+  }, []);
+
+
+  const loadPerformers = async () => {
+
+    try {
+
+      setLoading(true);
+
+      const [users, projects] = await Promise.all([
+        getUsers(),
+        getProjects(),
+      ]);
+
+      // Only normal users
+      const normalUsers = users.filter(
+        (user: any) => user.role === "user"
+      );
+
+      const calculatedPerformers: Performer[] =
+        normalUsers.map((user: any) => {
+
+          const assignedProjects = projects.filter(
+            (project: any) =>
+              project.assigned_user_id === user.id
+          );
+
+          const completedProjects =
+            assignedProjects.filter(
+              (project: any) =>
+                project.status === "Completed"
+            );
+
+          const assigned = assignedProjects.length;
+
+          const completed = completedProjects.length;
+
+          const efficiency =
+            assigned === 0
+              ? 0
+              : Math.round(
+                  (completed / assigned) * 100
+                );
+
+          return {
+            id: user.id,
+
+            name:
+              user.full_name ||
+              user.name ||
+              "Unknown User",
+
+            role:
+              user.role === "user"
+                ? "Team Member"
+                : user.role || "Team Member",
+
+            assigned,
+
+            completed,
+
+            efficiency,
+          };
+
+        });
+
+      // Highest completed projects first
+      calculatedPerformers.sort(
+        (a, b) => {
+
+          // First priority: completed projects
+          if (b.completed !== a.completed) {
+            return b.completed - a.completed;
+          }
+
+          // Second priority: efficiency
+          return b.efficiency - a.efficiency;
+
+        }
+      );
+
+      setPerformers(calculatedPerformers);
+
+    } catch (error) {
+
+      console.error(
+        "Failed to load top performers:",
+        error
+      );
+
+    } finally {
+
+      setLoading(false);
+
+    }
+
+  };
+
+
+  if (loading) {
+    return (
+      <div className="top-performers">
+
+        <div className="section-header">
+
+          <h2>
+            <Trophy size={22} />
+            Top Performers
+          </h2>
+
+        </div>
+
+        <div className="top-performers-loading">
+          Loading performers...
+        </div>
+
+      </div>
+    );
+  }
+
+
   return (
+
     <div className="top-performers">
 
       <div className="section-header">
@@ -45,48 +195,81 @@ export default function TopPerformers() {
 
       </div>
 
-      <table>
 
-        <thead>
+      {performers.length === 0 ? (
 
-          <tr>
-            <th>Rank</th>
-            <th>Name</th>
-            <th>Role</th>
-            <th>Completed</th>
-            <th>Efficiency</th>
-          </tr>
+        <div className="top-performers-empty">
+          No team members found.
+        </div>
 
-        </thead>
+      ) : (
 
-        <tbody>
+        <table>
 
-          {performers.map((user) => (
+          <thead>
 
-            <tr key={user.rank}>
+            <tr>
 
-              <td>#{user.rank}</td>
+              <th>Rank</th>
 
-              <td>{user.name}</td>
+              <th>Name</th>
 
-              <td>{user.role}</td>
+              <th>Role</th>
 
-              <td>{user.completed}</td>
+              <th>Completed</th>
 
-              <td>
-                <span className="efficiency">
-                  {user.efficiency}
-                </span>
-              </td>
+              <th>Efficiency</th>
 
             </tr>
 
-          ))}
+          </thead>
 
-        </tbody>
 
-      </table>
+          <tbody>
+
+            {performers.map(
+              (user, index) => (
+
+                <tr key={user.id}>
+
+                  <td>
+                    #{index + 1}
+                  </td>
+
+                  <td>
+                    {user.name}
+                  </td>
+
+                  <td>
+                    {user.role}
+                  </td>
+
+                  <td>
+                    {user.completed}
+                  </td>
+
+                  <td>
+
+                    <span className="efficiency">
+
+                      {user.efficiency}%
+
+                    </span>
+
+                  </td>
+
+                </tr>
+
+              )
+            )}
+
+          </tbody>
+
+        </table>
+
+      )}
 
     </div>
+
   );
 }

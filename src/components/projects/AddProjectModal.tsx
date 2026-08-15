@@ -18,7 +18,14 @@ export default function AddProjectModal({
 
   const [description, setDescription] = useState("");
 
-  const [priority, setPriority] = useState("Medium");
+  const [priority, setPriority] = useState("High");
+  const [dueDate, setDueDate] = useState("");
+
+  const [dueHour, setDueHour] = useState("");
+  const [dueMinute, setDueMinute] = useState("00");
+  const [duePeriod, setDuePeriod] = useState("AM");
+
+  const [dueTime, setDueTime] = useState("");
   const [status, setStatus] = useState("Planning");
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState(1);
@@ -83,13 +90,25 @@ export default function AddProjectModal({
         }
         break;
 
-
       case 5:
+        if (!dueDate) {
+          alert("Please select due date");
+          return;
+        }
+
+        if (!dueHour) {
+          alert("Please select due time");
+          return;
+        }
+        break;
+
+      case 6:
         if (!description.trim()) {
           alert("Please enter task description");
           return;
         }
         break;
+
     }
 
     setStep(step + 1);
@@ -114,6 +133,8 @@ export default function AddProjectModal({
         assigned_user_id: assignedUserId,
         description,
         priority,
+        due_date: dueDate,
+        due_time: dueTime,
         status,
         progress: 0,
       });
@@ -124,9 +145,17 @@ export default function AddProjectModal({
       setProjectName("");
 
       setDescription("");
-      setPriority("Medium");
+      setPriority("High");
       setStatus("Planning");
-
+      setDueDate("");
+      setDueHour("");
+      setDueMinute("00");
+      setDuePeriod("AM");
+      setDueTime("");
+      setStep(1);
+      setDepartment("");
+      setAssignedUser("");
+      setAssignedUserId("");
 
 
     } catch (err) {
@@ -156,14 +185,14 @@ export default function AddProjectModal({
 
           <div className="step-info">
 
-            <span>Step {step} of 6</span>
+            <span>Step {step} of 7</span>
 
             <div className="progress-bar">
 
               <div
                 className="progress-fill"
                 style={{
-                  width: `${(step / 6) * 100}%`,
+                  width: `${(step / 7) * 100}%`,
                 }}
               />
 
@@ -293,13 +322,6 @@ export default function AddProjectModal({
                 </div>
 
                 <div
-                  className={priority === "Medium" ? "selected" : ""}
-                  onClick={() => setPriority("Medium")}
-                >
-                  🟡 Medium
-                </div>
-
-                <div
                   className={priority === "Low" ? "selected" : ""}
                   onClick={() => setPriority("Low")}
                 >
@@ -312,9 +334,148 @@ export default function AddProjectModal({
 
           )}
 
-
-
           {step === 5 && (
+
+            <div className="wizard-step">
+
+              <h2>Due Date & Time</h2>
+
+              <p className="step-description">
+                Set when this task should be completed.
+              </p>
+
+              <div className="due-date-time">
+
+                <div className="due-field">
+
+                  <label>Due Date</label>
+
+                  <input
+                    type="date"
+                    value={dueDate}
+                    min={new Date().toISOString().split("T")[0]}
+                    onChange={(e) => setDueDate(e.target.value)}
+                  />
+
+                </div>
+
+                <div className="due-field">
+
+                  <label>Due Time</label>
+
+                  <div className="time-select-group">
+
+                    <select
+                      value={dueHour}
+                      onChange={(e) => {
+                        const hour = e.target.value;
+                        setDueHour(hour);
+
+                        if (hour) {
+                          const hour24 =
+                            duePeriod === "PM"
+                              ? (hour === "12"
+                                ? 12
+                                : Number(hour) + 12)
+                              : hour === "12"
+                                ? 0
+                                : Number(hour);
+
+                          setDueTime(
+                            `${String(hour24).padStart(2, "0")}:${dueMinute}`
+                          );
+                        }
+                      }}
+                    >
+                      <option value="">Hour</option>
+
+                      {Array.from(
+                        { length: 12 },
+                        (_, i) => i + 1
+                      ).map((hour) => (
+                        <option
+                          key={hour}
+                          value={hour}
+                        >
+                          {hour}
+                        </option>
+                      ))}
+                    </select>
+
+
+                    <select
+                      value={dueMinute}
+                      onChange={(e) => {
+                        const minute = e.target.value;
+                        setDueMinute(minute);
+
+                        if (dueHour) {
+                          const hour24 =
+                            duePeriod === "PM"
+                              ? (dueHour === "12"
+                                ? 12
+                                : Number(dueHour) + 12)
+                              : dueHour === "12"
+                                ? 0
+                                : Number(dueHour);
+
+                          setDueTime(
+                            `${String(hour24).padStart(2, "0")}:${minute}`
+                          );
+                        }
+                      }}
+                    >
+                      {["00", "15", "30", "45"].map(
+                        (minute) => (
+                          <option
+                            key={minute}
+                            value={minute}
+                          >
+                            {minute}
+                          </option>
+                        )
+                      )}
+                    </select>
+
+
+                    <select
+                      value={duePeriod}
+                      onChange={(e) => {
+                        const period = e.target.value;
+                        setDuePeriod(period);
+
+                        if (dueHour) {
+                          const hour24 =
+                            period === "PM"
+                              ? (dueHour === "12"
+                                ? 12
+                                : Number(dueHour) + 12)
+                              : dueHour === "12"
+                                ? 0
+                                : Number(dueHour);
+
+                          setDueTime(
+                            `${String(hour24).padStart(2, "0")}:${dueMinute}`
+                          );
+                        }
+                      }}
+                    >
+                      <option value="AM">AM</option>
+                      <option value="PM">PM</option>
+                    </select>
+
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+
+          )}
+
+
+
+          {step === 6 && (
 
             <div className="wizard-step">
 
@@ -330,26 +491,46 @@ export default function AddProjectModal({
 
           )}
 
-          {step === 6 && (
-
+          {step === 7 && (
             <div className="wizard-step">
 
               <h2>Review</h2>
 
-              <p><b>Task :</b> {projectName}</p>
+              <p>
+                <b>Task :</b> {projectName}
+              </p>
 
-              <p><b>Department :</b> {department}</p>
+              <p>
+                <b>Department :</b> {department}
+              </p>
 
-              <p><b>Assigned :</b> {assignedUser}</p>
+              <p>
+                <b>Assigned :</b> {assignedUser}
+              </p>
 
-              <p><b>Priority :</b> {priority}</p>
+              <p>
+                <b>Priority :</b> {priority}
+              </p>
 
+              <p>
+                <b>Due Date :</b>{" "}
+                {dueDate
+                  ? new Date(`${dueDate}T00:00:00`).toLocaleDateString()
+                  : "Not selected"}
+              </p>
 
+              <p>
+                <b>Due Time :</b>{" "}
+                {dueHour
+                  ? `${dueHour}:${dueMinute} ${duePeriod}`
+                  : "Not selected"}
+              </p>
 
-              <p><b>Description :</b> {description}</p>
+              <p>
+                <b>Description :</b> {description}
+              </p>
 
             </div>
-
           )}
 
         </div>
@@ -372,7 +553,7 @@ export default function AddProjectModal({
             Cancel
           </button>
 
-          {step < 6 ? (
+          {step < 7 ? (
             <button
               className="save-btn"
               onClick={handleNext}
@@ -388,6 +569,8 @@ export default function AddProjectModal({
               {loading ? "Creating..." : "Create Task"}
             </button>
           )}
+
+
 
         </div>
 

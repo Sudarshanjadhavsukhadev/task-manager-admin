@@ -6,29 +6,37 @@ import {
   CalendarDays,
   TrendingUp,
 } from "lucide-react";
+import {
+  getVisions,
+} from "../../services/vision.service";
 
-import { getVision } from "../../services/vision.service";
 import { getGoals } from "../../services/goal.service";
 import CreateGoalModal from "../../components/vision/CreateGoalModal";
 
 export default function VisionHeader() {
-  const [vision, setVision] = useState<any>(null);
+  const [visions, setVisions] = useState<any[]>([]);
+  const [selectedVision, setSelectedVision] = useState<any>(null);
 
   const [goals, setGoals] = useState<any[]>([]);
-  const [currentGoal, setCurrentGoal] = useState(0);
+
 
   const [openGoalModal, setOpenGoalModal] = useState(false);
 
   useEffect(() => {
-    fetchVision();
+    fetchVisions();
     fetchGoals();
   }, []);
 
-  const fetchVision = async () => {
+  const fetchVisions = async () => {
     try {
-      const data = await getVision();
-      console.log("Vision:", data);
-      setVision(data);
+      const data = await getVisions();
+
+      setVisions(data);
+
+      if (data.length > 0) {
+        setSelectedVision(data[0]);
+      }
+
     } catch (err) {
       console.error(err);
     }
@@ -42,51 +50,72 @@ export default function VisionHeader() {
 
       setGoals(data);
 
+      if (data.length > 0) {
+        
+      }
+
     } catch (err) {
       console.error(err);
     }
   };
 
-  useEffect(() => {
 
-    if (!goals.length) return;
 
-    const timer = setInterval(() => {
-
-      setCurrentGoal((prev) => {
-
-        if (prev === goals.length - 1) {
-
-          return 0;
-
-        }
-
-        return prev + 1;
-
-      });
-
-    }, 5000);
-
-    return () => clearInterval(timer);
-
-  }, [goals]);
-
-  if (!vision) {
+  if (!selectedVision) {
     return <h2>Loading...</h2>;
   }
 
   return (
-    <div
-      className={`vision-header ${goals.length > 0
-          ? [
-            "theme-blue",
-            "theme-purple",
-            "theme-green",
-            "theme-orange",
-          ][currentGoal % 4]
-          : "theme-blue"
-        }`}
-    >
+    <div className="vision-header theme-blue">
+
+      <div className="vision-board-header">
+
+        <div>
+          <h1>Vision Board</h1>
+          <p>Manage all your company visions</p>
+        </div>
+
+        <button className="create-vision-btn">
+          <Target size={18} />
+          Create Vision
+        </button>
+
+      </div>
+
+      <div className="vision-cards">
+
+        {visions.map((vision) => (
+
+          <div
+            key={vision.id}
+            className={`vision-card ${selectedVision?.id === vision.id ? "active" : ""
+              }`}
+            onClick={() => setSelectedVision(vision)}
+          >
+
+            <div className="vision-card-top">
+
+              <Target size={22} />
+
+              <span>{vision.progress}%</span>
+
+            </div>
+
+            <h3>{vision.title}</h3>
+
+            <p>{vision.description}</p>
+
+            <div className="vision-card-footer">
+
+              <span>{vision.launch_date}</span>
+
+            </div>
+
+          </div>
+
+        ))}
+
+      </div>
 
       <div className="vision-left">
 
@@ -96,19 +125,11 @@ export default function VisionHeader() {
         </span>
 
         <h1 className="goal-title">
-
-          {goals.length > 0
-            ? goals[currentGoal].title
-            : vision.company_vision}
-
+          {selectedVision.title}
         </h1>
 
         <p className="goal-description">
-
-          {goals.length > 0
-            ? goals[currentGoal].description
-            : "Our mission is to simplify productivity, empower teams and build the most powerful task management platform."}
-
+          {selectedVision.description}
         </p>
 
         <div className="vision-buttons">
@@ -150,9 +171,7 @@ export default function VisionHeader() {
 
             <h3>
 
-              {goals.length > 0
-                ? goals[currentGoal].due_date
-                : vision.launch_date}
+              {selectedVision.launch_date}
 
             </h3>
           </div>
@@ -169,9 +188,7 @@ export default function VisionHeader() {
 
             <h3>
 
-              {goals.length > 0
-                ? `${goals[currentGoal].progress}%`
-                : `${vision.progress}%`}
+              {selectedVision.progress}%
 
             </h3>
 
@@ -183,7 +200,8 @@ export default function VisionHeader() {
           <Target size={20} />
           <div>
             <span>Revenue Goal</span>
-            <h3>₹{Number(vision.revenue_goal).toLocaleString()}</h3>
+            <h3>₹{Number(selectedVision.
+              revenue_goal).toLocaleString()}</h3>
           </div>
         </div>
 
@@ -193,9 +211,9 @@ export default function VisionHeader() {
 
           <div>
 
-            <span>Major Goals</span>
+            <span>Total Goals</span>
 
-            <h3>{vision.major_goals}</h3>
+            <h3>{goals.length}</h3>
 
           </div>
 

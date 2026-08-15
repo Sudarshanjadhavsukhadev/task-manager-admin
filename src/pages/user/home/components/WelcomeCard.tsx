@@ -45,13 +45,13 @@ export default function WelcomeCard({ tasks }: Props) {
   }
 
   return (
-    <div className="welcome-card">
+    <div className="welcomeTrainer-card">
 
-      <div className="welcome-top">
+      <div className="welcomeTrainer-top">
 
         <div>
 
-          <p className="welcome-subtitle">
+          <p className="welcomeTrainer-subtitle">
             👋 Welcome Back
           </p>
 
@@ -61,20 +61,20 @@ export default function WelcomeCard({ tasks }: Props) {
 
         </div>
 
-        <button className="welcome-btn">
+        <button className="welcomeTrainer-btn">
           <ArrowUpRight size={20} />
         </button>
 
       </div>
 
-      <p className="welcome-text">
+      <p className="welcomeTrainer-text">
         You have <strong>{pendingTasks}</strong> task{pendingTasks !== 1 ? "s" : ""} to complete today.
       </p>
 
-      <div className="progress">
+      <div className="Trainer-progress">
 
         <div
-          className="progress-fill"
+          className="Trainer-progress-fill"
           style={{
             width: `${percentage}%`,
           }}
@@ -82,7 +82,7 @@ export default function WelcomeCard({ tasks }: Props) {
 
       </div>
 
-      <div className="welcome-footer">
+      <div className="welcomeTrainer-footer">
 
         <span>{percentage}% Completed</span>
 

@@ -18,19 +18,40 @@ export default function DashboardLayout({ children }: Props) {
   const [openTaskModal, setOpenTaskModal] = useState(false);
   const [openScheduleModal, setOpenScheduleModal] = useState(false);
 
-  return (
-    <div className="dashboard-layout">
+  // Sidebar state
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
-      <Sidebar />
+  return (
+    <div
+      className={`dashboard-layout ${
+        sidebarCollapsed ? "sidebar-collapsed" : ""
+      }`}
+    >
+
+      {/* ================= SIDEBAR ================= */}
+
+      <Sidebar
+        collapsed={sidebarCollapsed}
+        setCollapsed={setSidebarCollapsed}
+      />
+
+
+      {/* ================= HEADER ================= */}
 
       <Header
         onAddTask={() => setOpenTaskModal(true)}
         onAddSchedule={() => setOpenScheduleModal(true)}
       />
 
+
+      {/* ================= MAIN ================= */}
+
       <main className="dashboard-main">
         {children}
       </main>
+
+
+      {/* ================= MODALS ================= */}
 
       <AddProjectModal
         open={openTaskModal}

@@ -16,6 +16,13 @@ export default function Users() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "auto",
+    });
+  }, []);
+
+  useEffect(() => {
     fetchUsers();
   }, []);
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "./VisionBoard.css";
-import { getVision } from "../../services/vision.service";
+import { getVisions } from "../../services/vision.service";
 
 export default function VisionBoard() {
   const [vision, setVision] = useState<any>(null);
@@ -12,9 +12,14 @@ export default function VisionBoard() {
 
   const fetchVision = async () => {
     try {
-      const data = await getVision();
+      const data = await getVisions();
+
       console.log("Vision Data:", data);
-      setVision(data);
+
+      if (data.length > 0) {
+        setVision(data[0]); // Latest vision
+      }
+
     } catch (err) {
       console.error("Error:", err);
     } finally {
@@ -24,6 +29,10 @@ export default function VisionBoard() {
 
   if (loading) {
     return <h2>Loading...</h2>;
+  }
+
+  if (!vision) {
+    return <h2>No Vision Found</h2>;
   }
 
   return (

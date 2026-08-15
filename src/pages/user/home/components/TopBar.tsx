@@ -4,12 +4,14 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   getNotifications,
-  markNotificationAsRead,
+
 } from "../../../../services/notification.service";
 import { subscribeNotifications } from "../../../../services/realtime.service";
 
+import { supabase } from "../../../../lib/supabase";
+
 export default function TopBar() {
-  const [user, setUser] = useState<any>(null);
+
   const [notificationCount, setNotificationCount] = useState(0);
   const [notifications, setNotifications] = useState<any[]>([]);
   const [open, setOpen] = useState(false);
@@ -21,7 +23,6 @@ export default function TopBar() {
     if (!storedUser) return;
 
     const currentUser = JSON.parse(storedUser);
-    setUser(currentUser);
 
     const loadData = async () => {
       try {
@@ -57,12 +58,7 @@ export default function TopBar() {
 
         setNotificationCount((prev) => prev + 1);
 
-        if (Notification.permission === "granted") {
-          new Notification(notification.title, {
-            body: notification.message,
-            icon: "/favicon.ico",
-          });
-        }
+
       }
     );
 
@@ -71,32 +67,69 @@ export default function TopBar() {
     };
 
   }, []);
-  const hour = new Date().getHours();
 
-  let greeting = "Good Evening";
-
-  if (hour < 12) {
-    greeting = "Good Morning";
-  } else if (hour < 17) {
-    greeting = "Good Afternoon";
-  }
 
   return (
     <div className="topbar">
 
       <div>
-        <p className="topbar-greeting">
-          {greeting} 👋
-        </p>
-
         <h2 className="topbar-name">
-          {user?.full_name || user?.email}
+          MJK TM
         </h2>
       </div>
 
       <button
         className="notification-button"
-        onClick={() => setOpen(!open)}
+        onClick={async () => {
+          // =====================================================
+          // CLOSE BELL
+          // DELETE ALL NOTIFICATIONS PERMANENTLY
+          // =====================================================
+
+          if (open) {
+            try {
+              const storedUser = localStorage.getItem("user");
+
+              if (storedUser) {
+                const currentUser = JSON.parse(storedUser);
+
+                const { error } = await supabase
+                  .from("notifications")
+                  .delete()
+                  .eq("user_id", currentUser.id);
+
+                if (error) {
+                  throw error;
+                }
+
+                console.log(
+                  "✅ ALL NOTIFICATIONS PERMANENTLY DELETED"
+                );
+              }
+
+              // Clear notifications from UI
+              setNotifications([]);
+
+              // Reset badge
+              setNotificationCount(0);
+
+            } catch (error) {
+              console.error(
+                "❌ Failed to delete notifications:",
+                error
+              );
+            }
+
+            setOpen(false);
+            return;
+          }
+
+          // =====================================================
+          // OPEN BELL
+          // =====================================================
+
+          setOpen(true);
+        }}
       >
         <Bell size={22} />
 
@@ -122,28 +155,47 @@ export default function TopBar() {
                   }`}
                 onClick={async () => {
                   try {
-                    await markNotificationAsRead(n.id);
+                    // =====================================================
+                    // DELETE THIS NOTIFICATION PERMANENTLY
+                    // =====================================================
 
-                    setNotifications((prev) =>
-                      prev.map((item) =>
-                        item.id === n.id
-                          ? { ...item, is_read: true }
-                          : item
-                      )
+                    const { error } = await supabase
+                      .from("notifications")
+                      .delete()
+                      .eq("id", n.id);
+
+                    if (error) {
+                      throw error;
+                    }
+
+                    console.log(
+                      "✅ Notification permanently deleted:",
+                      n.id
                     );
 
+                    // Remove from UI
+                    setNotifications((prev) =>
+                      prev.filter((item) => item.id !== n.id)
+                    );
+
+                    // Decrease badge
                     setNotificationCount((prev) =>
                       Math.max(prev - 1, 0)
                     );
 
+                    // Close notification dropdown
                     setOpen(false);
 
+                    // Open task
                     if (n.task_id) {
                       navigate(`/user/task/${n.task_id}`);
                     }
 
                   } catch (err) {
-                    console.error(err);
+                    console.error(
+                      "❌ Failed to delete notification:",
+                      err
+                    );
                   }
                 }}
               >

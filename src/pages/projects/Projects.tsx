@@ -1,17 +1,22 @@
 import "./Projects.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import DashboardLayout from "../../components/layout/DashboardLayout";
-import ProjectFilters from "../../components/projects/ProjectFilters";
+
 import ProjectTable from "../../components/projects/ProjectTable";
 import AddProjectModal from "../../components/projects/AddProjectModal";
 
 export default function Projects() {
   const [openModal, setOpenModal] = useState(false);
 
-  const [activeFilter, setActiveFilter] = useState<
-    "incomplete" | "due" | "completed"
-  >("incomplete");
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth", // or "auto" if you don't want animation
+    });
+  }, []);
+
+
 
   return (
     <DashboardLayout>
@@ -30,17 +35,9 @@ export default function Projects() {
           </button>
         </div>
 
-        <ProjectFilters
-          activeFilter={activeFilter}
-          setActiveFilter={setActiveFilter}
-          incompleteCount={0}
-          dueCount={0}
-          completedCount={0}
-        />
 
-        <ProjectTable
-          activeFilter={activeFilter}
-        />
+
+        <ProjectTable />
 
         <AddProjectModal
           open={openModal}

@@ -29,7 +29,21 @@ export default function TaskList({ tasks }: Props) {
               id={task.id}
               title={task.project_name}
               project={task.department}
-              time={new Date(task.created_at).toLocaleDateString()}
+
+              time={
+                task.due_date && task.due_time
+                  ? `${new Date(
+                    `${task.due_date}T${task.due_time}`
+                  ).toLocaleDateString()} • ${new Date(
+                    `1970-01-01T${task.due_time}`
+                  ).toLocaleTimeString([], {
+                    hour: "numeric",
+                    minute: "2-digit",
+                    hour12: true,
+                  })}`
+                  : "No due date"
+              }
+
               priority={task.priority}
             />
           ))

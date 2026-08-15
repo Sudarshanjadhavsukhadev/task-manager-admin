@@ -1,273 +1,386 @@
-/* ===========================
-   Header
-=========================== */
+/* =========================================
+   PREMIUM HEADER
+========================================= */
 
 .header {
-  position: fixed;
-  top: 0;
-  left: 260px;
-  right: 0;
-  height: 80px;
+    position: fixed;
 
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(12px);
+    top: 0;
+    left: 0;
+    right: 0;
 
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    width: 100%;
 
-  padding: 0 35px;
+    height: 84px;
 
-  border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
 
-  box-shadow: 0 4px 18px rgba(15, 23, 42, 0.05);
+    padding: 0 35px;
 
-  z-index: 999;
+    background: rgba(255, 255, 255, .82);
+
+    backdrop-filter: blur(18px);
+
+    border-bottom: 1px solid rgba(226, 232, 240, .8);
+
+    box-shadow:
+        0 8px 35px rgba(15, 23, 42, .06);
+
+    z-index: 1100;
+
+    box-sizing: border-box;
 }
 
-/* ===========================
-   Search
-=========================== */
 
-.header-search {
-  position: relative;
-}
 
-.search-icon {
-  position: absolute;
-  left: 18px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #94a3b8;
-}
 
-.search-input {
-  width: 360px;
-  height: 48px;
 
-  padding-left: 50px;
-  padding-right: 18px;
-
-  border: 1px solid #dbe2ea;
-  border-radius: 14px;
-
-  background: #f8fafc;
-
-  outline: none;
-
-  font-size: 15px;
-
-  transition: all 0.3s ease;
-}
-
-.search-input:focus {
-  background: white;
-  border-color: #2563eb;
-
-  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
-}
-
-/* ===========================
-   Right Side
-=========================== */
+/* =========================================
+   RIGHT SIDE
+========================================= */
 
 .header-right {
-  display: flex;
-  align-items: center;
-  gap: 25px;
+    display: flex;
+    align-items: center;
+
+    justify-content: flex-end;
+
+    width: 100%;
+
+    gap: 20px;
 }
 
-/* ===========================
-   Notification
-=========================== */
 
-.notification-btn {
-  position: relative;
+/* =========================================
+   ACTION BUTTONS
+========================================= */
 
-  width: 48px;
-  height: 48px;
+.header-actions {
+    display: flex;
+    align-items: center;
 
-  border: none;
-  border-radius: 14px;
-
-  background: #f8fafc;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  cursor: pointer;
-
-  transition: all .3s ease;
+    gap: 16px;
 }
 
-.notification-btn:hover {
-  background: #2563eb;
-  color: white;
 
-  transform: translateY(-2px);
+.add-project-btn,
+.add-schedule-btn {
+    height: 50px;
+
+    padding: 0 24px;
+
+    border: none;
+
+    border-radius: 16px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: .35s;
 }
 
-.notification-badge {
-  position: absolute;
 
-  top: 8px;
-  right: 8px;
+/* =========================================
+   ADD TASK
+========================================= */
 
-  width: 18px;
-  height: 18px;
-
-  border-radius: 50%;
-
-  background: #ef4444;
-  color: white;
-
-  font-size: 10px;
-  font-weight: 700;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* ===========================
-   Profile
-=========================== */
-
-.profile-card {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-
-  padding: 8px 14px;
-
-  border-radius: 16px;
-
-  cursor: pointer;
-
-  transition: all .3s ease;
-}
-
-.profile-card:hover {
-  background: #f8fafc;
-}
-
-.profile-icon {
-  color: #2563eb;
-}
-
-.profile-info h4 {
-  margin: 0;
-  font-size: 15px;
-  font-weight: 700;
-  color: #0f172a;
-}
-
-.profile-info p {
-  margin-top: 3px;
-  font-size: 13px;
-  color: #64748b;
-}
-
-/* ===========================
-   Responsive
-=========================== */
-
-@media (max-width: 992px) {
-  .header {
-    left: 0;
-    padding: 0 20px;
-  }
-
-  .search-input {
-    width: 240px;
-  }
-}
-
-@media (max-width: 768px) {
-  .search-input {
-    display: none;
-  }
-
-  .search-icon {
-    display: none;
-  }
-
-  .profile-info {
-    display: none;
-  }
-}
 .add-project-btn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+    background: linear-gradient(
+        135deg,
+        #2563eb,
+        #1d4ed8
+    );
 
-  height: 46px;
-  padding: 0 18px;
+    color: #fff;
 
-  border: none;
-  border-radius: 12px;
-
-  background: #2563eb;
-  color: #fff;
-
-  font-size: 15px;
-  font-weight: 600;
-
-  cursor: pointer;
-  transition: all 0.3s ease;
+    box-shadow:
+        0 12px 28px rgba(37, 99, 235, .30);
 }
+
 
 .add-project-btn:hover {
-  background: #1d4ed8;
-  transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(37, 99, 235, 0.25);
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 18px 35px rgba(37, 99, 235, .40);
 }
 
-.header-actions{
-    display:flex;
-    align-items:center;
-    gap:15px;
+
+/* =========================================
+   ADD SCHEDULE
+========================================= */
+
+.add-schedule-btn {
+    background: linear-gradient(
+        135deg,
+        #22c55e,
+        #16a34a
+    );
+
+    color: white;
+
+    box-shadow:
+        0 12px 28px rgba(22, 163, 74, .28);
 }
 
-.add-project-btn{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    padding:16px 28px;
-    border:none;
-    border-radius:16px;
-    background:#2563eb;
-    color:#fff;
-    font-size:16px;
-    font-weight:600;
-    cursor:pointer;
-    box-shadow:0 10px 25px rgba(37,99,235,.25);
-    transition:.3s;
+
+.add-schedule-btn:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 18px 35px rgba(22, 163, 74, .38);
 }
 
-.add-project-btn:hover{
-    transform:translateY(-2px);
-    background:#1d4ed8;
+
+/* =========================================
+   NOTIFICATION
+========================================= */
+
+.notification-btn {
+    position: relative;
+
+    width: 52px;
+    height: 52px;
+
+    border: none;
+
+    border-radius: 18px;
+
+    background: white;
+
+    color: #334155;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+
+    transition: .35s;
+
+    box-shadow:
+        0 10px 25px rgba(15, 23, 42, .08);
 }
 
-.add-schedule-btn{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    padding:16px 28px;
-    border:none;
-    border-radius:16px;
-    background:#16a34a;
-    color:#fff;
-    font-size:16px;
-    font-weight:600;
-    cursor:pointer;
-    box-shadow:0 10px 25px rgba(22,163,74,.25);
-    transition:.3s;
+
+.notification-btn:hover {
+    background: #2563eb;
+
+    color: white;
+
+    transform: translateY(-3px);
 }
 
-.add-schedule-btn:hover{
-    transform:translateY(-2px);
-    background:#15803d;
+
+.notification-badge {
+    position: absolute;
+
+    top: 7px;
+    right: 7px;
+
+    width: 18px;
+    height: 18px;
+
+    border-radius: 50%;
+
+    background: #ef4444;
+
+    color: white;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border: 2px solid white;
+}
+
+
+/* =========================================
+   PROFILE
+========================================= */
+
+.profile-card {
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    padding: 8px 18px;
+
+    border-radius: 18px;
+
+    background: white;
+
+    cursor: pointer;
+
+    transition: .35s;
+
+    box-shadow:
+        0 10px 25px rgba(15, 23, 42, .06);
+}
+
+
+.profile-card:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 16px 35px rgba(37, 99, 235, .12);
+}
+
+
+.profile-icon {
+    color: #2563eb;
+
+    width: 48px;
+    height: 48px;
+}
+
+
+.profile-info h4 {
+    margin: 0;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    color: #0f172a;
+}
+
+
+.profile-info p {
+    margin-top: 4px;
+
+    font-size: 13px;
+
+    color: #64748b;
+}
+
+
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 768px) {
+
+    .header {
+        left: 0;
+        right: 0;
+
+        padding: 0 20px;
+    }
+
+    .profile-info {
+        display: none;
+    }
+
+    .add-project-btn span,
+    .add-schedule-btn span {
+        display: none;
+    }
+
+    .add-project-btn,
+    .add-schedule-btn {
+        width: 52px;
+        padding: 0;
+    }
+}
+/* =========================================
+   MJK HEADER BRAND
+========================================= */
+
+.header-brand {
+    position: absolute;
+
+    left: 28px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    user-select: none;
+}
+
+
+/* =========================================
+   MJK LOGO
+========================================= */
+
+.header-brand-logo {
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+
+    background: linear-gradient(
+        135deg,
+        #2563eb,
+        #1d4ed8
+    );
+
+    color: white;
+
+    font-size: 17px;
+    font-weight: 900;
+
+    letter-spacing: -1px;
+
+    box-shadow:
+        0 10px 25px rgba(37, 99, 235, .28);
+}
+
+
+/* =========================================
+   BRAND TEXT
+========================================= */
+
+.header-brand-text {
+    display: flex;
+    flex-direction: column;
+
+    line-height: 1;
+}
+
+.header-brand-text span {
+    font-size: 19px;
+
+    font-weight: 900;
+
+    letter-spacing: -.5px;
+
+    color: #0f172a;
+}
+
+.header-brand-text small {
+    margin-top: 5px;
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    color: #64748b;
+
+    letter-spacing: .3px;
 }

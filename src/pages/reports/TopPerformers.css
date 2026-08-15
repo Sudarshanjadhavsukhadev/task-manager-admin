@@ -1,81 +1,319 @@
+/* =====================================================
+   TOP PERFORMERS
+===================================================== */
+
 .top-performers {
+    width: 100%;
+    box-sizing: border-box;
 
-    background:#fff;
+    background: #ffffff;
 
-    border:1px solid #e2e8f0;
+    border: 1px solid #e2e8f0;
 
-    border-radius:20px;
+    border-radius: 22px;
 
-    padding:24px;
+    padding: 28px;
 
     box-shadow:
-        0 8px 24px rgba(15,23,42,.04),
-        0 2px 6px rgba(15,23,42,.03);
+        0 15px 40px rgba(15, 23, 42, 0.06),
+        0 3px 10px rgba(15, 23, 42, 0.03);
 
+    overflow: hidden;
 }
 
-.section-header{
 
-    display:flex;
+/* =====================================================
+   HEADER
+===================================================== */
 
-    align-items:center;
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-    margin-bottom:20px;
-
+    margin-bottom: 24px;
 }
 
-.section-header h2{
 
-    display:flex;
+.section-header h2 {
+    display: flex;
+    align-items: center;
 
-    align-items:center;
+    gap: 12px;
 
-    gap:10px;
+    margin: 0;
 
-    margin:0;
+    color: #0f172a;
 
-    color:#0f172a;
+    font-size: 21px;
 
+    font-weight: 700;
+
+    letter-spacing: -0.3px;
 }
 
-.top-performers table{
 
-    width:100%;
+.section-header h2 svg {
+    width: 23px;
+    height: 23px;
 
-    border-collapse:collapse;
-
+    color: #2563eb;
 }
 
-.top-performers th{
 
-    text-align:left;
+/* =====================================================
+   TABLE WRAPPER
+===================================================== */
 
-    padding:16px;
+.top-performers table {
+    width: 100%;
 
-    background:#f8fafc;
+    table-layout: fixed;
 
-    color:#475569;
+    border-collapse: separate;
 
+    border-spacing: 0;
+
+    overflow: hidden;
 }
 
-.top-performers td{
 
-    padding:18px 16px;
+/* =====================================================
+   TABLE HEADER
+===================================================== */
 
-    border-bottom:1px solid #f1f5f9;
+.top-performers th {
+    padding: 15px 18px;
 
+    text-align: left;
+
+    background: #f8fafc;
+
+    color: #475569;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    letter-spacing: 0.2px;
+
+    border-bottom: 1px solid #e2e8f0;
 }
 
-.efficiency{
 
-    background:#dcfce7;
+/* Column widths */
 
-    color:#15803d;
+.top-performers th:nth-child(1) {
+    width: 10%;
+}
 
-    padding:6px 12px;
+.top-performers th:nth-child(2) {
+    width: 27%;
+}
 
-    border-radius:999px;
+.top-performers th:nth-child(3) {
+    width: 25%;
+}
 
-    font-weight:600;
+.top-performers th:nth-child(4) {
+    width: 18%;
+}
+
+.top-performers th:nth-child(5) {
+    width: 20%;
+}
+
+
+/* Rounded table header corners */
+
+.top-performers th:first-child {
+    border-top-left-radius: 12px;
+}
+
+.top-performers th:last-child {
+    border-top-right-radius: 12px;
+}
+
+
+/* =====================================================
+   TABLE ROW
+===================================================== */
+
+.top-performers tbody tr {
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.top-performers tbody tr:hover {
+    background: #f8fbff;
+}
+
+
+/* =====================================================
+   TABLE CELLS
+===================================================== */
+
+.top-performers td {
+    padding: 18px;
+
+    color: #0f172a;
+
+    font-size: 15px;
+
+    font-weight: 500;
+
+    border-bottom: 1px solid #f1f5f9;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+
+/* Remove last border */
+
+.top-performers tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* =====================================================
+   RANK
+===================================================== */
+
+.top-performers td:first-child {
+    color: #64748b;
+
+    font-weight: 700;
+}
+
+
+/* Highlight first rank */
+
+.top-performers tbody tr:first-child td:first-child {
+    color: #2563eb;
+}
+
+
+/* =====================================================
+   NAME
+===================================================== */
+
+.top-performers td:nth-child(2) {
+    font-weight: 700;
+
+    color: #0f172a;
+}
+
+
+/* =====================================================
+   ROLE
+===================================================== */
+
+.top-performers td:nth-child(3) {
+    color: #64748b;
+}
+
+
+/* =====================================================
+   COMPLETED
+===================================================== */
+
+.top-performers td:nth-child(4) {
+    font-weight: 700;
+
+    color: #0f172a;
+}
+
+
+/* =====================================================
+   EFFICIENCY
+===================================================== */
+
+.efficiency {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-width: 54px;
+
+    height: 32px;
+
+    padding: 0 12px;
+
+    box-sizing: border-box;
+
+    background: #dcfce7;
+
+    color: #15803d;
+
+    border: 1px solid #bbf7d0;
+
+    border-radius: 999px;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    box-shadow:
+        0 3px 8px rgba(22, 163, 74, 0.08);
+}
+
+
+/* =====================================================
+   LOADING
+===================================================== */
+
+.top-performers-loading {
+    padding: 40px 20px;
+
+    text-align: center;
+
+    color: #64748b;
+
+    font-size: 15px;
+}
+
+
+/* =====================================================
+   EMPTY STATE
+===================================================== */
+
+.top-performers-empty {
+    padding: 40px 20px;
+
+    text-align: center;
+
+    color: #64748b;
+
+    background: #f8fafc;
+
+    border-radius: 14px;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 900px) {
+
+    .top-performers {
+        padding: 20px;
+    }
+
+    .top-performers table {
+        min-width: 700px;
+    }
+
+    .top-performers {
+        overflow-x: auto;
+    }
 
 }

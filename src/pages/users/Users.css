@@ -1,131 +1,221 @@
-.users-page {
-  width: 100%;
-  padding: 10px 5px;
+/* =========================================
+   USERS PAGE
+========================================= */
+
+.users-page{
+    width:100%;
+    padding:20px;
 }
 
-.users-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+/* =========================================
+   HEADER CARD
+========================================= */
 
-  margin-bottom: 40px;
-  padding: 28px 32px;
+.users-header{
 
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 22px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
 
-  box-shadow:
-    0 8px 25px rgba(15, 23, 42, 0.05),
-    0 2px 8px rgba(15, 23, 42, 0.04);
+    padding:34px 36px;
+
+    margin-bottom:35px;
+
+    border-radius:24px;
+
+    background:rgba(255,255,255,.88);
+
+    backdrop-filter:blur(18px);
+
+    border:1px solid rgba(226,232,240,.8);
+
+    box-shadow:
+        0 12px 40px rgba(15,23,42,.06);
 }
 
-.users-header h1 {
-  margin: 0;
+.users-header h1{
 
-  font-size: 36px;
-  font-weight: 700;
-  letter-spacing: -0.5px;
+    margin:0;
 
-  color: #0f172a;
+    font-size:42px;
+
+    font-weight:800;
+
+    letter-spacing:-1px;
+
+    color:#0f172a;
 }
 
-.users-header p {
-  margin-top: 8px;
+.users-header p{
 
-  font-size: 15px;
-  line-height: 1.6;
+    margin-top:10px;
 
-  color: #64748b;
+    font-size:16px;
+
+    color:#64748b;
+
+    line-height:1.6;
 }
 
-.add-user-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
+/* =========================================
+   BUTTON
+========================================= */
 
-  min-width: 170px;
-  height: 56px;
+.add-user-btn{
 
-  border: none;
-  border-radius: 16px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
-  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    gap:12px;
 
-  color: #ffffff;
-  font-size: 15px;
-  font-weight: 600;
+    height:56px;
 
-  cursor: pointer;
+    padding:0 28px;
 
-  transition: all 0.3s ease;
+    border:none;
 
-  box-shadow:
-    0 10px 25px rgba(37, 99, 235, 0.30),
-    0 4px 10px rgba(37, 99, 235, 0.20);
+    border-radius:18px;
+
+    background:linear-gradient(
+        135deg,
+        #2563eb,
+        #1d4ed8
+    );
+
+    color:white;
+
+    font-size:15px;
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.35s;
+
+    box-shadow:
+        0 14px 30px rgba(37,99,235,.28);
 }
 
-.add-user-btn::before {
-  content: "+";
-  font-size: 20px;
-  font-weight: 700;
+.add-user-btn::before{
+
+    content:"+";
+
+    font-size:22px;
+
+    font-weight:800;
 }
 
-.add-user-btn:hover {
-  transform: translateY(-4px);
+.add-user-btn:hover{
 
-  box-shadow:
-    0 18px 35px rgba(37, 99, 235, 0.35),
-    0 8px 18px rgba(37, 99, 235, 0.25);
+    transform:translateY(-4px);
+
+    box-shadow:
+        0 22px 45px rgba(37,99,235,.38);
 }
 
-.add-user-btn:active {
-  transform: scale(0.98);
+.add-user-btn:active{
+
+    transform:scale(.97);
 }
 
-@media (max-width: 768px) {
-  .users-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 20px;
-    padding: 24px;
-  }
+/* =========================================
+   LOADING CARD
+========================================= */
 
-  .add-user-btn {
-    width: 100%;
-  }
+.loading-users{
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+    height:420px;
+
+    border-radius:24px;
+
+    background:white;
+
+    box-shadow:
+        0 12px 35px rgba(15,23,42,.06);
 }
 
-.loading-users {
-  background: white;
-  border-radius: 18px;
-  padding: 80px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+.loader{
+
+    width:58px;
+    height:58px;
+
+    border:5px solid #e2e8f0;
+
+    border-top:5px solid #2563eb;
+
+    border-radius:50%;
+
+    animation:spin .8s linear infinite;
+
+    margin-bottom:22px;
 }
 
-.loader {
-  width: 55px;
-  height: 55px;
-  border: 5px solid #e5e7eb;
-  border-top: 5px solid #2563eb;
-  border-radius: 50%;
-  animation: spin .8s linear infinite;
-  margin-bottom: 18px;
+.loading-users p{
+
+    margin:0;
+
+    font-size:17px;
+
+    font-weight:600;
+
+    color:#64748b;
 }
 
-.loading-users p {
-  font-size: 16px;
-  color: #64748b;
-  font-weight: 600;
+@keyframes spin{
+
+    to{
+        transform:rotate(360deg);
+    }
+
 }
 
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media(max-width:900px){
+
+.users-header{
+
+    flex-direction:column;
+
+    align-items:flex-start;
+
+    gap:22px;
+}
+
+.add-user-btn{
+
+    width:100%;
+}
+
+}
+
+@media(max-width:600px){
+
+.users-page{
+
+    padding:15px;
+}
+
+.users-header{
+
+    padding:24px;
+}
+
+.users-header h1{
+
+    font-size:34px;
+}
+
+.users-header p{
+
+    font-size:15px;
+}
+
 }

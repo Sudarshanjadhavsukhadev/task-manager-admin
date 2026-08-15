@@ -1,0 +1,167 @@
+.vision-card{
+
+    background:white;
+
+    border-radius:20px;
+
+    padding:24px;
+
+    border:1px solid #ececec;
+
+    cursor:pointer;
+
+    transition:.35s;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:18px;
+
+}
+
+.vision-card:hover{
+
+    transform:translateY(-6px);
+
+    box-shadow:0 20px 50px rgba(0,0,0,.08);
+
+}
+
+.vision-card.active{
+
+    border:2px solid #2563eb;
+
+}
+
+.vision-card-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+.vision-icon{
+
+    width:52px;
+
+    height:52px;
+
+    border-radius:14px;
+
+    background:#eef4ff;
+
+    color:#2563eb;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+}
+
+.vision-progress{
+
+    font-weight:700;
+
+    color:#2563eb;
+
+}
+
+.vision-card h3{
+
+    font-size:22px;
+
+    color:#1f2937;
+
+}
+
+.vision-card p{
+
+    color:#6b7280;
+
+    line-height:1.6;
+
+}
+
+.vision-progress-bar{
+
+    height:8px;
+
+    background:#edf2f7;
+
+    border-radius:30px;
+
+    overflow:hidden;
+
+}
+
+.vision-progress-fill{
+
+    height:100%;
+
+    background:linear-gradient(90deg,#2563eb,#4f46e5);
+
+}
+
+.vision-info{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    font-size:14px;
+
+}
+
+.vision-info div{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:6px;
+
+    color:#6b7280;
+
+}
+
+.open-vision-btn{
+
+    margin-top:auto;
+
+    background:#2563eb;
+
+    color:white;
+
+    border:none;
+
+    padding:12px;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:8px;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+.open-vision-btn:hover{
+
+    background:#1d4ed8;
+
+}

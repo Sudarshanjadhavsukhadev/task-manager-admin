@@ -1,203 +1,353 @@
-/* ===========================
-   Sidebar
-=========================== */
+/* =====================================================
+   SIDEBAR
+===================================================== */
 
 .sidebar {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 260px;
-  height: 100vh;
+    width: 250px;
+    height: calc(100vh - 84px);
 
-  background: linear-gradient(180deg, #1d4ed8 0%, #1e40af 100%);
+    position: fixed;
+    left: 0;
+    top: 84px;
 
-  color: white;
+    display: flex;
+    flex-direction: column;
 
-  display: flex;
-  flex-direction: column;
+    background: linear-gradient(180deg,
+            #2563eb 0%,
+            #1d4ed8 45%,
+            #1e3a8a 100%);
 
-  box-shadow: 8px 0 30px rgba(15, 23, 42, 0.15);
+    color: white;
 
-  z-index: 1000;
+    transition:
+        width 0.3s ease,
+        box-shadow 0.3s ease;
+
+    z-index: 1000;
+
+    overflow: hidden;
 }
 
-/* ===========================
-   Logo
-=========================== */
+
+/* =====================================================
+   LOGO AREA
+===================================================== */
 
 .sidebar-logo {
-  height: 80px;
+    height: 120px;
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    align-items: center;
 
-  border-bottom: 1px solid rgba(255,255,255,.12);
+    padding: 0 20px;
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+
+    position: relative;
+
+    white-space: nowrap;
 }
 
-.sidebar-logo h1 {
-  font-size: 26px;
-  font-weight: 700;
-  letter-spacing: .5px;
+
+
+
+/* =====================================================
+   TOGGLE BUTTON
+===================================================== */
+
+.sidebar-toggle {
+    position: absolute;
+
+    right: 14px;
+    top: 18px;
+
+    width: 38px;
+    height: 38px;
+
+    border: none;
+    border-radius: 10px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: white;
+
+    background: rgba(255, 255, 255, 0.12);
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
 }
 
-/* ===========================
-   Navigation
-=========================== */
+.sidebar-toggle:hover {
+    background: rgba(255, 255, 255, 0.22);
+
+    transform: scale(1.05);
+}
+
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
 
 .sidebar-nav {
-  flex: 1;
-  padding: 24px 16px;
+    flex: 1;
+
+    padding: 28px 10px;
 }
 
 .sidebar-nav ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+    list-style: none;
+
+    padding: 0;
+    margin: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
 }
+
+
+/* =====================================================
+   NAV ITEM
+===================================================== */
 
 .sidebar-item {
-  display: flex;
-  align-items: center;
-  gap: 16px;
+    height: 64px;
 
-  padding: 15px 18px;
+    display: flex;
+    align-items: center;
 
-  margin-bottom: 10px;
+    gap: 20px;
 
-  border-radius: 14px;
+    padding: 0 28px;
 
-  cursor: pointer;
+    border-radius: 0 22px 22px 0;
 
-  transition: all .3s ease;
+    color: rgba(255, 255, 255, 0.9);
 
-  color: rgba(255,255,255,.90);
+    text-decoration: none;
 
-  font-weight: 500;
-}
+    font-size: 18px;
+    font-weight: 600;
 
-.sidebar-item:hover {
+    white-space: nowrap;
 
-  background: rgba(255,255,255,.15);
-
-  transform: translateX(6px);
-
-  color: white;
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        padding 0.3s ease;
 }
 
 .sidebar-item svg {
-
-  transition: .3s;
-}
-
-.sidebar-item:hover svg {
-
-  transform: scale(1.15);
-
-}
-
-/* Active Item */
-
-.sidebar-item {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-
-  padding: 15px 18px;
-  margin-bottom: 10px;
-
-  border-radius: 14px;
-
-  cursor: pointer;
-
-  text-decoration: none;
-  color: rgba(255,255,255,.90);
-
-  transition: all .3s ease;
+    flex-shrink: 0;
 }
 
 .sidebar-item:hover {
-  background: rgba(255,255,255,.15);
-  transform: translateX(6px);
+    background: rgba(255, 255, 255, 0.12);
+
+    color: white;
 }
+
+
+/* ACTIVE */
 
 .sidebar-item.active {
-  background: white;
-  color: #1d4ed8;
-  font-weight: 700;
-  box-shadow: 0 10px 25px rgba(0,0,0,.15);
+    background: #f8fafc;
+
+    color: #2563eb;
+
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.08);
 }
 
-.sidebar-item.active:hover {
-  transform: translateX(0);
+.sidebar-item.active::before {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+
+    width: 5px;
+    height: 42px;
+
+    background: white;
+
+    border-radius: 0 5px 5px 0;
 }
 
-/* ===========================
-   Footer
-=========================== */
+
+/* =====================================================
+   FOOTER
+===================================================== */
 
 .sidebar-footer {
+    padding: 22px;
 
-  padding:20px;
-
-  border-top:1px solid rgba(255,255,255,.12);
-
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
 }
 
-.logout-btn{
 
-width:100%;
+/* =====================================================
+   LOGOUT
+===================================================== */
 
-display:flex;
+.logout-btn {
+    width: 100%;
+    height: 64px;
 
-align-items:center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-justify-content:center;
+    gap: 18px;
 
-gap:12px;
+    border: none;
+    border-radius: 14px;
 
-padding:14px;
+    background: #ef4444;
 
-border:none;
+    color: white;
 
-border-radius:14px;
+    font-size: 17px;
+    font-weight: 700;
 
-background:rgba(255,255,255,.10);
+    cursor: pointer;
 
-color:white;
-
-font-size:15px;
-
-font-weight:600;
-
-cursor:pointer;
-
-transition:.3s;
-
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
 }
 
-.logout-btn:hover{
+.logout-btn:hover {
+    background: #dc2626;
 
-background:#ef4444;
-
-transform:translateY(-2px);
-
+    transform: translateY(-2px);
 }
 
-/* ===========================
-   Scrollbar
-=========================== */
 
-.sidebar-nav::-webkit-scrollbar{
+/* =====================================================
+   COLLAPSED SIDEBAR
+===================================================== */
 
-width:6px;
-
+.sidebar.collapsed {
+    width: 82px;
 }
 
-.sidebar-nav::-webkit-scrollbar-thumb{
 
-background:rgba(255,255,255,.25);
+/* Hide logo text */
 
-border-radius:20px;
+.sidebar.collapsed .sidebar-logo h1 {
+    opacity: 0;
 
+    transform: translateX(-20px);
+
+    pointer-events: none;
+}
+
+
+/* Center toggle */
+
+.sidebar.collapsed .sidebar-toggle {
+    right: 22px;
+}
+
+
+/* Navigation */
+
+.sidebar.collapsed .sidebar-item {
+    width: 60px;
+
+    padding: 0;
+
+    margin: 0 auto;
+
+    justify-content: center;
+
+    border-radius: 14px;
+
+    gap: 0;
+}
+
+
+/* Hide menu text */
+
+.sidebar.collapsed .sidebar-item span {
+    display: none;
+}
+
+
+/* Logout */
+
+.sidebar.collapsed .sidebar-footer {
+    padding: 22px 11px;
+}
+
+.sidebar.collapsed .logout-btn {
+    width: 60px;
+
+    margin: 0 auto;
+
+    padding: 0;
+
+    gap: 0;
+}
+
+.sidebar.collapsed .logout-btn span {
+    display: none;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 900px) {
+
+    .sidebar {
+        width: 82px;
+    }
+
+    .sidebar-logo h1 {
+        display: none;
+    }
+
+    .sidebar-toggle {
+        right: 22px;
+    }
+
+    .sidebar-item {
+        width: 60px;
+
+        padding: 0;
+
+        margin: 0 auto;
+
+        justify-content: center;
+
+        border-radius: 14px;
+
+        gap: 0;
+    }
+
+    .sidebar-item span {
+        display: none;
+    }
+
+    .logout-btn {
+        width: 60px;
+
+        margin: auto;
+
+        gap: 0;
+    }
+
+    .logout-btn span {
+        display: none;
+    }
 }

@@ -1,4 +1,6 @@
 import { supabase } from "../lib/supabase";
+import { Capacitor } from "@capacitor/core";
+import { initializePushNotifications } from "./notification.service";
 
 export const signup = async (
   fullName: string,
@@ -57,6 +59,29 @@ export const login = async (
   if (!profile.role) {
     throw new Error(
       "User role not assigned. Contact administrator."
+    );
+  }
+
+  // =====================================================
+  // ANDROID PUSH NOTIFICATIONS
+  // =====================================================
+
+  if (
+    Capacitor.isNativePlatform() &&
+    profile.role === "user"
+  ) {
+    console.log(
+      "Android app detected - initializing push notifications..."
+    );
+
+    const pushResult =
+      await initializePushNotifications(
+        profile.id
+      );
+
+    console.log(
+      "Push initialization result:",
+      pushResult
     );
   }
 

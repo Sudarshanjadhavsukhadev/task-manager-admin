@@ -4,15 +4,25 @@
 
 .dashboard-layout {
   min-height: 100vh;
+
   background: #f1f5f9;
+
+  /* Sidebar widths */
+  --sidebar-width: 250px;
+  --sidebar-collapsed-width: 82px;
 }
 
-/* Main Content */
-.dashboard-main {
-  margin-left: 260px;              /* Sidebar Width */
-  margin-top: 80px;                /* Header Height */
 
-  width: calc(100% - 260px);
+/* ===========================
+   Main Content
+=========================== */
+
+.dashboard-main {
+  margin-left: var(--sidebar-width);
+  margin-top: 80px;
+
+  width: calc(100% - var(--sidebar-width));
+
   min-height: calc(100vh - 80px);
 
   padding: 30px;
@@ -22,22 +32,55 @@
   overflow-x: hidden;
   overflow-y: auto;
 
-  transition: all 0.3s ease;
+  transition:
+    margin-left 0.3s ease,
+    width 0.3s ease;
 }
 
-/* Tablet */
+
+/* ===========================
+   COLLAPSED SIDEBAR
+=========================== */
+
+.dashboard-layout.sidebar-collapsed .dashboard-main {
+  margin-left: var(--sidebar-collapsed-width);
+
+  width: calc(100% - var(--sidebar-collapsed-width));
+}
+
+
+/* ===========================
+   Tablet
+=========================== */
+
 @media (max-width: 1024px) {
-  .dashboard-main {
-    margin-left: 220px;
-    width: calc(100% - 220px);
+
+  .dashboard-layout {
+    --sidebar-width: 82px;
   }
+
+  .dashboard-main {
+    margin-left: 82px;
+
+    width: calc(100% - 82px);
+  }
+
 }
 
-/* Mobile */
+
+/* ===========================
+   Mobile
+=========================== */
+
 @media (max-width: 768px) {
-  .dashboard-main {
+
+  .dashboard-main,
+  .dashboard-layout.sidebar-collapsed .dashboard-main {
     margin-left: 0;
+
     width: 100%;
+
     padding: 20px;
   }
+
 }

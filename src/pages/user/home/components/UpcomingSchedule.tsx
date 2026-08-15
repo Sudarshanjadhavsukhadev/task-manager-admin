@@ -23,34 +23,32 @@ export default function UpcomingSchedule() {
     <section className="upcoming-schedule">
 
       <div className="schedule-header">
-
         <h2>Upcoming Schedule</h2>
-
-        <button>See All</button>
-
       </div>
 
-      {schedules.length === 0 ? (
+      <div className="schedule-list">
+        {schedules.length === 0 ? (
 
-        <p className="no-schedule">
-          No upcoming schedules
-        </p>
+          <p className="no-schedule">
+            No upcoming schedules
+          </p>
 
-      ) : (
+        ) : (
 
-        schedules.map((schedule) => (
+          schedules.map((schedule) => (
 
-          <ScheduleItem
-            key={schedule.id}
-            time={schedule.start_time}
-            title={schedule.meeting_name}
-            project={schedule.location}
-            color="#2563eb"
-          />
+            <ScheduleItem
+              key={schedule.id}
+              time={schedule.start_time}
+              title={schedule.meeting_name}
+              project={schedule.location}
+              color="#2563eb"
+            />
 
-        ))
+          ))
 
-      )}
+        )}
+      </div>
 
     </section>
   );

@@ -4,6 +4,7 @@ import { login } from "../../../services/auth.service";
 import "./Auth.css";
 import { getFCMToken } from "../../../services/notification.service";
 import { updateUserFCMToken } from "../../../services/user.service";
+import toast from "react-hot-toast";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -66,7 +67,7 @@ export default function Login() {
         console.log("No FCM token received");
       }
 
-      alert("Login Successful!");
+      toast.success("Login successful!");
 
       if (res.user.role === "admin") {
 
@@ -96,61 +97,153 @@ export default function Login() {
   };
   return (
     <div className="auth-container">
-      <div className="auth-card">
 
-        <div className="logo-circle">
-          ✓
+      {/* ================= LEFT BRANDING ================= */}
+
+      <div className="auth-brand">
+
+        <div className="brand-logo">
+          MJK
         </div>
 
-        <h1>Welcome Back 👋</h1>
-        <p>Login to continue managing your tasks.</p>
+        <div className="brand-content">
 
-        <form className="auth-form" onSubmit={handleLogin}>
+          <span className="brand-label">
+            MJK WORKSPACE
+          </span>
 
-          <div className="input-group">
-            <label>Email</label>
-            <input
-              type="email"
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
+          <h2>
+            Manage work.
+            <br />
+            Stay ahead.
+          </h2>
 
-          <div className="input-group">
-            <label>Password</label>
-            <input
-              type="password"
-              placeholder="Enter your password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
+          <p>
+            A simple and powerful workspace for
+            managing projects, tasks and schedules.
+          </p>
 
-          <div className="auth-options">
-            <Link to="/user/forgot-password">
-              Forgot Password?
-            </Link>
-          </div>
+        </div>
 
-          <button
-            type="submit"
-            className="auth-btn"
-            disabled={loading}
-          >
-            {loading ? "Logging in..." : "Login"}
-          </button>
-
-        </form>
-
-        <div className="auth-footer">
-          Don't have an account?
-          <Link to="/user/signup">
-            Create Account
-          </Link>
+        <div className="brand-footer">
+          © 2026 MJK Task Manager
         </div>
 
       </div>
+
+
+      {/* ================= LOGIN SIDE ================= */}
+
+      <div className="auth-content">
+
+        <div className="auth-card">
+
+          <div className="mobile-logo">
+            MJK
+          </div>
+
+          <div className="auth-heading">
+
+            <span className="welcome-label">
+              WELCOME BACK
+            </span>
+
+            <h1>
+              Sign in to your account
+            </h1>
+
+            <p>
+              Enter your details to continue
+              managing your workspace.
+            </p>
+
+          </div>
+
+
+          <form
+            className="auth-form"
+            onSubmit={handleLogin}
+          >
+
+            <div className="input-group">
+
+              <label>Email address</label>
+
+              <input
+                type="email"
+                placeholder="you@example.com"
+                value={email}
+                onChange={(e) =>
+                  setEmail(e.target.value)
+                }
+                autoComplete="email"
+              />
+
+            </div>
+
+
+            <div className="input-group">
+
+              <label>Password</label>
+
+              <input
+                type="password"
+                placeholder="Enter your password"
+                value={password}
+                onChange={(e) =>
+                  setPassword(e.target.value)
+                }
+                autoComplete="current-password"
+              />
+
+            </div>
+
+
+            <div className="auth-options">
+
+              <Link to="/user/forgot-password">
+                Forgot password?
+              </Link>
+
+            </div>
+
+
+            <button
+              type="submit"
+              className="auth-btn"
+              disabled={loading}
+            >
+              {loading
+                ? "Signing in..."
+                : "Sign In"}
+            </button>
+
+          </form>
+
+
+          <div className="auth-divider">
+            <span />
+            <p>Secure workspace access</p>
+            <span />
+          </div>
+
+
+          <div className="auth-footer">
+
+            <span>
+              Don't have an account?
+            </span>
+
+            <Link to="/user/signup">
+              Create account
+            </Link>
+
+          </div>
+
+        </div>
+
+      </div>
+
     </div>
   );
 }

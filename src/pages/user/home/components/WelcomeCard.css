@@ -1,4 +1,4 @@
-.welcome-card{
+.welcomeTrainer-card{
 
     background:linear-gradient(135deg,#2563eb,#1d4ed8);
 
@@ -14,7 +14,7 @@
 
 }
 
-.welcome-top{
+.welcomeTrainer-top{
 
     display:flex;
 
@@ -26,7 +26,7 @@
 
 }
 
-.welcome-subtitle{
+.welcomeTrainer-subtitle{
 
     margin:0;
 
@@ -36,7 +36,7 @@
 
 }
 
-.welcome-card h2{
+.welcomeTrainer-card h2{
 
     margin:6px 0 0;
 
@@ -44,7 +44,7 @@
 
 }
 
-.welcome-btn{
+.welcomeTrainer-btn{
 
     width:48px;
 
@@ -68,7 +68,7 @@
 
 }
 
-.welcome-text{
+.welcomeTrainer-text{
 
     margin-bottom:18px;
 
@@ -76,7 +76,7 @@
 
 }
 
-.progress{
+.Trainer-progress{
 
     width:100%;
 
@@ -90,7 +90,7 @@
 
 }
 
-.progress-fill{
+.Trainer-progress-fill{
 
     width:75%;
 
@@ -102,7 +102,7 @@
 
 }
 
-.welcome-footer{
+.welcomeTrainer-footer{
 
     display:flex;
 

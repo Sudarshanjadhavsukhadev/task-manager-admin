@@ -1,5 +1,6 @@
 import "./ProgressCard.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 import {
     CheckCircle2,
@@ -25,19 +26,97 @@ export default function ProgressCard({
         (t) => t.status === "Completed"
     ).length;
 
-    const pending = tasks.filter(
-        (t) => t.status !== "Completed"
-    ).length;
+    const pending = tasks.filter((task) => {
+        if (task.status === "Completed") {
+            return false;
+        }
 
-    const overdue = tasks.filter((t) => {
-        if (!t.due_date) return false;
+        // No deadline = still pending
+        if (!task.due_date || !task.due_time) {
+            return true;
+        }
 
-        return (
-            new Date(t.due_date) < new Date() &&
-            t.status !== "Completed"
+        const dueDateTime = new Date(
+            `${task.due_date}T${task.due_time}`
         );
+
+        // Only pending if deadline has NOT passed
+        return new Date() <= dueDateTime;
     }).length;
 
+    const overdue = tasks.filter((task) => {
+        if (
+            !task.due_date ||
+            !task.due_time ||
+            task.status === "Completed"
+        ) {
+            return false;
+        }
+
+        const dueDateTime = new Date(
+            `${task.due_date}T${task.due_time}`
+        );
+
+        return new Date() > dueDateTime;
+    }).length;
+
+    // =====================================================
+    // OVERDUE TASK ALERT
+    // =====================================================
+
+    useEffect(() => {
+        const checkOverdueTasks = () => {
+            const now = new Date();
+
+            tasks.forEach((task) => {
+                if (
+                    task.status === "Completed" ||
+                    !task.due_date ||
+                    !task.due_time
+                ) {
+                    return;
+                }
+
+                const dueDateTime = new Date(
+                    `${task.due_date}T${task.due_time}`
+                );
+
+                if (now > dueDateTime) {
+                    const alertKey = `overdue_alert_${task.id}`;
+
+                    // Prevent the same task from showing
+                    // the overdue message repeatedly
+                    if (!sessionStorage.getItem(alertKey)) {
+
+                        toast.error(
+                            `⚠️ ${task.project_name} is overdue. Please complete it.`,
+                            {
+                                duration: 6000,
+                            }
+                        );
+
+                        sessionStorage.setItem(
+                            alertKey,
+                            "true"
+                        );
+                    }
+                }
+            });
+        };
+
+        // Check immediately
+        checkOverdueTasks();
+
+        // Check every 1 minute
+        const interval = setInterval(
+            checkOverdueTasks,
+            60 * 1000
+        );
+
+        return () => {
+            clearInterval(interval);
+        };
+    }, [tasks]);
     const total = tasks.length;
 
     const percentage =
@@ -61,9 +140,24 @@ export default function ProgressCard({
         setTitle("Pending Tasks");
 
         setSelectedTasks(
-            tasks.filter(
-                task => task.status !== "Completed"
-            )
+            tasks.filter((task) => {
+                if (task.status === "Completed") {
+                    return false;
+                }
+
+                // No deadline = pending
+                if (!task.due_date || !task.due_time) {
+                    return true;
+                }
+
+                const dueDateTime = new Date(
+                    `${task.due_date}T${task.due_time}`
+                );
+
+                // Only show tasks whose deadline
+                // has NOT passed
+                return new Date() <= dueDateTime;
+            })
         );
 
         setOpen(true);
@@ -73,11 +167,21 @@ export default function ProgressCard({
         setTitle("Overdue Tasks");
 
         setSelectedTasks(
-            tasks.filter(task =>
-                task.due_date &&
-                new Date(task.due_date) < new Date() &&
-                task.status !== "Completed"
-            )
+            tasks.filter((task) => {
+                if (
+                    !task.due_date ||
+                    !task.due_time ||
+                    task.status === "Completed"
+                ) {
+                    return false;
+                }
+
+                const dueDateTime = new Date(
+                    `${task.due_date}T${task.due_time}`
+                );
+
+                return new Date() > dueDateTime;
+            })
         );
 
         setOpen(true);

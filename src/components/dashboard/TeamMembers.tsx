@@ -73,18 +73,18 @@ export default function TeamMembers() {
   );
 
   return (
-    <div className="team-members">
+    <div className="teammember-container">
 
-      <div className="team-header">
-        <h1>Team Members</h1>
+      <div className="teammember-header">
 
-        <p>
-          Track performance, assigned tasks and productivity.
-        </p>
+        <div className="teammember-title">
+          <h1>Team Members</h1>
+         
+        </div>
 
-        <div className="team-search">
+        <div className="teammember-search">
 
-          <Search className="team-search-icon" size={20} />
+          <Search className="teammember-search-icon" size={20} />
 
           <input
             type="text"
@@ -94,11 +94,13 @@ export default function TeamMembers() {
           />
 
         </div>
+
       </div>
 
-      <div className="team-grid">
+      <div className="teammember-grid">
 
         {filteredUsers.map((user) => {
+          console.log(user);
 
           const assigned = projects.filter(
             (p) => p.assigned_user_id === user.id
@@ -119,26 +121,29 @@ export default function TeamMembers() {
                 (completed.length / assigned.length) * 100
               );
 
-         
+
 
           return (
             <div
               key={user.id}
-              className="team-card"
+              className="teammember-card"
               onClick={() =>
                 navigate(`/admin/users/${user.id}`)
               }
             >
 
-              <div className="avatar">
-                {user.full_name.charAt(0)}
+
+              <div className="teammember-avatar">
+                {user.full_name?.charAt(0) || "U"}
               </div>
 
-              <h2>{user.full_name}</h2>
+              <h2>{user.full_name || "Unknown User"}</h2>
 
-              <p>{user.email}</p>
+              <p>{user.email || "No Email"}</p>
 
-              <div className="stats">
+
+
+              <div className="teammember-stats">
 
                 <div>
                   <span>Assigned</span>
@@ -157,14 +162,14 @@ export default function TeamMembers() {
 
               </div>
 
-              <div className="progress-text">
+              <div className="teammember-progress-text">
                 {progress}% Completed
               </div>
 
-              <div className="progress">
+              <div className="teammember-progress">
 
                 <div
-                  className="progress-fill"
+                  className="teammember-progress-fill"
                   style={{
                     width: `${progress}%`,
                   }}
@@ -174,7 +179,7 @@ export default function TeamMembers() {
 
 
 
-              <button className="view-btn">
+              <button className="teammember-view-btn">
                 View Details →
               </button>
 

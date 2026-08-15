@@ -1,8 +1,6 @@
 import "./Header.css";
 import {
   Bell,
-  Search,
-  UserCircle,
   Plus,
 } from "lucide-react";
 
@@ -18,15 +16,21 @@ export default function Header({
   return (
     <header className="header">
 
-      <div className="header-search">
-        <Search className="search-icon" size={18} />
+      {/* ================= HEADER BRAND ================= */}
 
-        <input
-          type="text"
-          placeholder="Search projects, tasks..."
-          className="search-input"
-        />
+      <div className="header-brand">
+        <div className="header-brand-logo">
+          MJK
+        </div>
+
+        <div className="header-brand-text">
+          <span>TM</span>
+          <small>Task Manager</small>
+        </div>
       </div>
+
+
+      {/* ================= RIGHT SIDE ================= */}
 
       <div className="header-right">
 
@@ -36,7 +40,7 @@ export default function Header({
             className="add-project-btn"
             onClick={onAddTask}
           >
-
+            <Plus size={18} />
             <span>Add Task</span>
           </button>
 
@@ -50,19 +54,14 @@ export default function Header({
 
         </div>
 
+
         <button className="notification-btn">
           <Bell size={22} />
-          <span className="notification-badge">3</span>
+
+          <span className="notification-badge">
+            3
+          </span>
         </button>
-
-        <div className="profile-card">
-          <UserCircle size={46} className="profile-icon" />
-
-          <div className="profile-info">
-            <h4>Admin</h4>
-            <p>Administrator</p>
-          </div>
-        </div>
 
       </div>
 

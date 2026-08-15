@@ -1,189 +1,352 @@
-.progress-card{
+/* =====================================================
+   PROGRESS CARD
+===================================================== */
 
-    background:#ffffff;
+.progress-card {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
 
-    border-radius:24px;
+    background: #ffffff;
+    border-radius: 24px;
 
-    padding:22px;
+    padding: 22px;
+    margin-bottom: 28px;
 
-    margin-bottom:28px;
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.05);
 
-    box-shadow:0 10px 24px rgba(15,23,42,.05);
-
+    overflow: hidden;
 }
 
-.progress-header{
 
-    display:flex;
+/* =====================================================
+   HEADER
+===================================================== */
 
-    justify-content:space-between;
+.progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-    align-items:center;
-
-    margin-bottom:18px;
-
+    margin-bottom: 18px;
 }
 
-.progress-header h2{
+.progress-header h2 {
+    margin: 0;
 
-    margin:0;
-
-    font-size:22px;
-
+    font-size: 22px;
+    font-weight: 500;
 }
 
-.progress-header span{
+.progress-header span {
+    font-size: 22px;
+    font-weight: 700;
 
-    font-size:22px;
-
-    font-weight:700;
-
-    color:#2563eb;
-
+    color: #2563eb;
 }
 
-.progress-bar{
 
-    height:12px;
+/* =====================================================
+   PROGRESS BAR
+===================================================== */
 
-    background:#e2e8f0;
+.progress-bar {
+    width: 100%;
+    height: 12px;
 
-    border-radius:999px;
+    background: #e2e8f0;
 
-    overflow:hidden;
+    border-radius: 999px;
 
+    overflow: hidden;
 }
 
-.progress-value{
+.progress-value {
+    height: 100%;
 
-    width:82%;
+    background: linear-gradient(
+        90deg,
+        #2563eb,
+        #60a5fa
+    );
 
-    height:100%;
+    border-radius: 999px;
 
-    background:linear-gradient(90deg,#2563eb,#60a5fa);
-
-    border-radius:999px;
-
+    transition: width 0.4s ease;
 }
 
-.progress-stats{
 
-    display:flex;
+/* =====================================================
+   STATS
+===================================================== */
 
-    justify-content:space-between;
+.progress-stats {
+    display: grid;
 
-    margin-top:24px;
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
 
-    gap:12px;
+    gap: 12px;
 
+    margin-top: 24px;
+
+    width: 100%;
 }
 
-.stat{
 
-    flex:1;
+/* =====================================================
+   STAT CARD
+===================================================== */
 
-    border-radius:18px;
+.stat {
+    min-width: 0;
 
-    padding:16px;
+    box-sizing: border-box;
 
-    display:flex;
+    border-radius: 18px;
 
-    gap:10px;
+    padding: 14px 10px;
 
-    align-items:center;
+    display: flex;
 
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    cursor: pointer;
+
+    overflow: hidden;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
-.success{
+.stat:hover {
+    transform: translateY(-2px);
 
-    background:#dcfce7;
-
+    box-shadow:
+        0 8px 18px rgba(15, 23, 42, 0.08);
 }
 
-.warning{
 
-    background:#fef3c7;
+/* =====================================================
+   STAT COLORS
+===================================================== */
 
+.success {
+    background: #dcfce7;
 }
 
-.danger{
-
-    background:#fee2e2;
-
+.warning {
+    background: #fef3c7;
 }
 
-.stat h3{
-
-    margin:0;
-
+.danger {
+    background: #fee2e2;
 }
 
-.stat p{
 
-    margin-top:4px;
+/* =====================================================
+   STAT CONTENT
+===================================================== */
 
-    font-size:13px;
-
-    color:#64748b;
-
+.stat svg {
+    flex-shrink: 0;
 }
 
-.task-popup-overlay{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.45);
+.stat h3 {
+    margin: 0;
 
-    display:flex;
-    justify-content:center;
-    align-items:center;
+    font-size: 18px;
+    line-height: 1.2;
 
-    z-index:9999;
+    text-align: center;
 }
 
-.task-popup{
+.stat p {
+    margin: 4px 0 0;
 
-    width:90%;
-    max-width:420px;
+    font-size: 13px;
 
-    background:#fff;
+    color: #64748b;
 
-    border-radius:20px;
+    white-space: nowrap;
 
-    padding:24px;
-
-    max-height:70vh;
-
-    overflow:auto;
+    text-align: center;
 }
 
-.popup-task{
 
-    padding:14px;
+/* =====================================================
+   POPUP OVERLAY
+===================================================== */
 
-    margin-top:12px;
+.task-popup-overlay {
+    position: fixed;
 
-    border:1px solid #e5e7eb;
+    inset: 0;
 
-    border-radius:12px;
+    background: rgba(0, 0, 0, 0.45);
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    z-index: 9999;
+
+    padding: 20px;
+
+    box-sizing: border-box;
 }
 
-.task-popup button{
 
-    width:100%;
+/* =====================================================
+   POPUP
+===================================================== */
 
-    margin-top:20px;
+.task-popup {
+    width: 100%;
 
-    height:48px;
+    max-width: 420px;
 
-    border:none;
+    background: #ffffff;
 
-    border-radius:12px;
+    border-radius: 20px;
 
-    background:#2563eb;
+    padding: 24px;
 
-    color:#fff;
+    max-height: 70vh;
 
-    font-size:16px;
+    overflow-y: auto;
 
-    cursor:pointer;
+    box-sizing: border-box;
+}
+
+
+/* =====================================================
+   POPUP TASK
+===================================================== */
+
+.popup-task {
+    padding: 14px;
+
+    margin-top: 12px;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 12px;
+}
+
+.popup-task h4 {
+    margin: 0 0 5px;
+}
+
+.popup-task p {
+    margin: 0;
+
+    color: #64748b;
+
+    font-size: 13px;
+}
+
+
+/* =====================================================
+   POPUP BUTTON
+===================================================== */
+
+.task-popup button {
+    width: 100%;
+
+    margin-top: 20px;
+
+    height: 48px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: #2563eb;
+
+    color: #ffffff;
+
+    font-size: 16px;
+
+    cursor: pointer;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 480px) {
+
+    .progress-card {
+        padding: 18px;
+
+        border-radius: 22px;
+    }
+
+    .progress-header h2 {
+        font-size: 21px;
+    }
+
+    .progress-header span {
+        font-size: 22px;
+    }
+
+    .progress-stats {
+        gap: 8px;
+    }
+
+    .stat {
+        padding: 13px 6px;
+
+        gap: 5px;
+
+        flex-direction: column;
+    }
+
+    .stat h3 {
+        font-size: 18px;
+    }
+
+    .stat p {
+        font-size: 12px;
+    }
+
+    .stat svg {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+
+/* =====================================================
+   VERY SMALL PHONES
+===================================================== */
+
+@media (max-width: 360px) {
+
+    .progress-card {
+        padding: 16px;
+    }
+
+    .progress-stats {
+        gap: 6px;
+    }
+
+    .stat {
+        padding: 12px 4px;
+    }
+
+    .stat h3 {
+        font-size: 17px;
+    }
+
+    .stat p {
+        font-size: 11px;
+    }
 }

@@ -1,39 +1,101 @@
-.upcoming-schedule{
+/* =====================================================
+   UPCOMING SCHEDULE CARD
+===================================================== */
 
-    margin-top:32px;
+.upcoming-schedule {
+  width: 100%;
+  box-sizing: border-box;
 
+  background: #ffffff;
+
+  border-radius: 22px;
+
+  padding: 20px;
+
+  margin-top: 20px;
+
+  border: 1px solid #e8edf5;
+
+  box-shadow:
+    0 8px 25px rgba(15, 23, 42, 0.06),
+    0 2px 6px rgba(15, 23, 42, 0.03);
 }
 
-.schedule-header{
 
-    display:flex;
+/* =====================================================
+   HEADER
+===================================================== */
 
-    justify-content:space-between;
+.schedule-header {
+  display: flex;
+  align-items: center;
 
-    align-items:center;
-
-    margin-bottom:18px;
-
+  margin-bottom: 16px;
 }
 
-.schedule-header h2{
+.schedule-header h2 {
+  margin: 0;
 
-    margin:0;
+  font-size: 17px;
+  font-weight: 750;
 
-    font-size:22px;
-
+  color: #0f172a;
 }
 
-.schedule-header button{
 
-    border:none;
+/* =====================================================
+   SCHEDULE LIST
+===================================================== */
 
-    background:none;
+.schedule-list {
+  display: flex;
+  flex-direction: column;
 
-    color:#2563eb;
+  gap: 10px;
+}
 
-    font-weight:600;
 
-    cursor:pointer;
+/* =====================================================
+   EMPTY STATE
+===================================================== */
+
+.no-schedule {
+  margin: 0;
+
+  padding: 20px 12px;
+
+  text-align: center;
+
+  color: #94a3b8;
+
+  font-size: 14px;
+
+  background: #f8fafc;
+
+  border-radius: 14px;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 480px) {
+
+  .upcoming-schedule {
+    padding: 18px;
+
+    border-radius: 20px;
+
+    margin-top: 18px;
+  }
+
+  .schedule-header {
+    margin-bottom: 14px;
+  }
+
+  .schedule-header h2 {
+    font-size: 16px;
+  }
 
 }

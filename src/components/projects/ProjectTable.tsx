@@ -22,15 +22,14 @@ ChartJS.register(
   Legend
 );
 
-type Props = {
-  activeFilter: "incomplete" | "due" | "completed";
-};
 
-export default function ProjectTable({
-  activeFilter,
-}: Props) {
+
+export default function ProjectTable() {
   const [projects, setProjects] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedDate, setSelectedDate] = useState(
+    new Date().toISOString().split("T")[0]
+  );
 
   useEffect(() => {
     fetchProjects();
@@ -147,34 +146,24 @@ export default function ProjectTable({
     ],
   };
 
-  const filteredProjects = projects.filter((project) => {
+  const filteredProjects = selectedDate
+    ? projects.filter((project) => {
+      const projectDate = new Date(project.created_at);
 
-    const created = new Date(project.created_at);
+      const year = projectDate.getFullYear();
+      const month = String(
+        projectDate.getMonth() + 1
+      ).padStart(2, "0");
+      const day = String(
+        projectDate.getDate()
+      ).padStart(2, "0");
 
-    const hours =
-      (Date.now() - created.getTime()) /
-      (1000 * 60 * 60);
+      const formattedProjectDate =
+        `${year}-${month}-${day}`;
 
-    if (activeFilter === "completed") {
-      return project.status === "Completed";
-    }
-
-    if (activeFilter === "incomplete") {
-      return (
-        project.status !== "Completed" &&
-        hours < 24
-      );
-    }
-
-    if (activeFilter === "due") {
-      return (
-        project.status !== "Completed" &&
-        hours >= 24
-      );
-    }
-
-    return true;
-  });
+      return formattedProjectDate === selectedDate;
+    })
+    : projects;
 
   return (
     <>
@@ -191,12 +180,15 @@ export default function ProjectTable({
               data={departmentData}
               options={{
                 responsive: true,
+                maintainAspectRatio: false,
+
                 plugins: {
                   legend: {
                     position: "right",
                   },
                 },
-                cutout: "70%",
+
+                cutout: "68%",
               }}
             />
 
@@ -225,109 +217,146 @@ export default function ProjectTable({
 
       </div>
 
-      <div className="project-table-card">
-        <table className="project-table">
+      <div className="project-table-section">
 
-          <thead>
+        <div className="project-date-filter">
 
-            <tr>
+          <div className="date-filter-left">
 
-              <th>Project</th>
+            <label htmlFor="project-date">
+              View Projects By Date
+            </label>
 
-              <th>Start Date</th>
+            <input
+              id="project-date"
+              type="date"
+              value={selectedDate}
+              onChange={(e) =>
+                setSelectedDate(e.target.value)
+              }
+            />
 
-              <th>Priority</th>
+          </div>
 
-              <th>Status</th>
+          {selectedDate && (
+            <button
+              className="clear-date-btn"
+              onClick={() =>
+                setSelectedDate(
+                  new Date().toISOString().split("T")[0]
+                )
+              }
+            >
+              Clear Date
+            </button>
+          )}
 
-              <th>Delete</th>
-
-            </tr>
-
-          </thead>
-
-
-
-          <tbody>
-
-            {filteredProjects.map((project) => (
-
-              <tr key={project.id}>
-
-                <td>{project.project_name}</td>
-
-
-
-                <td>
-
-                  {new Date(project.created_at).toLocaleDateString("en-GB")}
-
-                </td>
+        </div>
 
 
+        <div className="project-table-card">
+          <table className="project-table">
 
-                <td>
+            <thead>
 
-                  <span
+              <tr>
 
-                    className={`priority ${project.priority.toLowerCase()}`}
+                <th>Project</th>
 
-                  >
+                <th>Start Date</th>
 
-                    {project.priority}
+                <th>Priority</th>
 
-                  </span>
+                <th>Status</th>
 
-                </td>
-
-
-
-                <td>
-
-                  <span
-
-                    className={`status ${project.status
-
-                      .toLowerCase()
-
-                      .replace(" ", "-")}`}
-
-                  >
-
-                    {project.status}
-
-                  </span>
-
-                </td>
-
-
-
-                <td className="actions">
-
-                  <button
-
-                    className="delete"
-
-                    onClick={() => handleDelete(project.id)}
-
-                  >
-
-                    <Trash2 size={18} />
-
-                  </button>
-
-                </td>
+                <th>Delete</th>
 
               </tr>
 
-            ))}
+            </thead>
 
-          </tbody>
 
-        </table>
+
+            <tbody>
+
+              {filteredProjects.map((project) => (
+
+                <tr key={project.id}>
+
+                  <td>{project.project_name}</td>
+
+
+
+                  <td>
+
+                    {new Date(project.created_at).toLocaleDateString("en-GB")}
+
+                  </td>
+
+
+
+                  <td>
+
+                    <span
+
+                      className={`priority ${project.priority.toLowerCase()}`}
+
+                    >
+
+                      {project.priority}
+
+                    </span>
+
+                  </td>
+
+
+
+                  <td>
+
+                    <span
+
+                      className={`status ${project.status
+
+                        .toLowerCase()
+
+                        .replace(" ", "-")}`}
+
+                    >
+
+                      {project.status}
+
+                    </span>
+
+                  </td>
+
+
+
+                  <td className="actions">
+
+                    <button
+
+                      className="delete"
+
+                      onClick={() => handleDelete(project.id)}
+
+                    >
+
+                      <Trash2 size={18} />
+
+                    </button>
+
+                  </td>
+
+                </tr>
+
+              ))}
+
+            </tbody>
+
+          </table>
+        </div>
+
       </div>
-
-
 
     </>
   );

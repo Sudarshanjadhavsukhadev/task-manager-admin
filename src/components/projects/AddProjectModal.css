@@ -533,3 +533,182 @@
   letter-spacing: -1px;
   margin-bottom: 14px;
 }
+
+.due-date-time {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 30px;
+}
+
+.due-field {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.due-field label {
+  font-size: 15px;
+  font-weight: 600;
+  color: #475569;
+}
+
+.due-field input {
+  width: 100%;
+  height: 58px;
+  padding: 0 16px;
+
+  border: 1.5px solid #dbe3ef;
+  border-radius: 14px;
+
+  background: #fff;
+
+  font-size: 16px;
+  color: #172033;
+
+  outline: none;
+
+  transition: all 0.2s ease;
+}
+
+.due-field input:focus {
+  border-color: #2563eb;
+
+  box-shadow:
+    0 0 0 4px rgba(37, 99, 235, 0.1);
+}
+
+@media (max-width: 650px) {
+  .due-date-time {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =====================================================
+   DUE DATE & TIME
+===================================================== */
+
+.due-date-time {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  margin-top: 35px;
+}
+
+.due-field {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.due-field label {
+  font-size: 15px;
+  font-weight: 700;
+  color: #475569;
+}
+
+/* Date input */
+
+.due-field input[type="date"] {
+  width: 100%;
+  height: 72px;
+  padding: 0 20px;
+
+  border: 1px solid #dbe3ef;
+  border-radius: 18px;
+
+  background: #ffffff;
+
+  font-size: 17px;
+  font-weight: 500;
+  color: #1e293b;
+
+  outline: none;
+
+  transition: all 0.2s ease;
+}
+
+.due-field input[type="date"]:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+}
+
+/* =====================================================
+   TIME SELECTORS
+===================================================== */
+
+.time-select-group {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr;
+  gap: 10px;
+
+  width: 100%;
+}
+
+.time-select-group select {
+  width: 100%;
+  height: 72px;
+
+  padding: 0 18px;
+
+  border: 1px solid #dbe3ef;
+  border-radius: 18px;
+
+  background: #ffffff;
+
+  color: #1e293b;
+
+  font-size: 17px;
+  font-weight: 600;
+
+  outline: none;
+
+  cursor: pointer;
+
+  appearance: auto;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.time-select-group select:hover {
+  border-color: #b8c7dc;
+}
+
+.time-select-group select:focus {
+  border-color: #2563eb;
+
+  box-shadow:
+    0 0 0 4px rgba(37, 99, 235, 0.1);
+}
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 700px) {
+
+  .due-date-time {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .time-select-group {
+    grid-template-columns: 1.2fr 1fr 1fr;
+    gap: 8px;
+  }
+
+  .time-select-group select {
+    height: 60px;
+    padding: 0 12px;
+    font-size: 15px;
+  }
+
+  .due-field input[type="date"] {
+    height: 60px;
+    font-size: 15px;
+  }
+
+}

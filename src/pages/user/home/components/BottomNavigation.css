@@ -87,3 +87,14 @@
     transform:scale(.94);
 
 }
+.logout {
+  color: #ef4444;
+}
+
+.logout svg {
+  color: #ef4444;
+}
+
+.logout:hover {
+  background: rgba(239, 68, 68, 0.08);
+}

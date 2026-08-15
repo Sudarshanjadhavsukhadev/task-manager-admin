@@ -5,7 +5,7 @@ import DashboardLayout from "../../components/layout/DashboardLayout";
 import "./UserDetails.css";
 import {
   ArrowLeft,
-  Search,
+
   Users,
   CheckCircle2,
   Clock3,
@@ -39,8 +39,9 @@ export default function UserDetails() {
   // Loading
   const [loading, setLoading] = useState(true);
 
-  // Search
-  const [search, setSearch] = useState("");
+  const [showCompletedModal, setShowCompletedModal] =
+    useState(false);
+
 
   // Filter
   const [activeTab, setActiveTab] = useState<
@@ -109,21 +110,43 @@ export default function UserDetails() {
     (p) => p.status === "Completed"
   ).length;
 
-  const pending = projects.filter(
-    (p) => p.status !== "Completed"
-  ).length;
+  const pending = projects.filter((p) => {
 
-  const due = projects.filter((p) => {
+    if (p.status === "Completed") {
+      return false;
+    }
 
-    if (p.status === "Completed") return false;
+    // No deadline = pending
+    if (!p.due_date || !p.due_time) {
+      return true;
+    }
 
-    const created = new Date(p.created_at);
-
-    const dueDate = new Date(
-      created.getTime() + 24 * 60 * 60 * 1000
+    const dueDateTime = new Date(
+      `${p.due_date}T${p.due_time}`
     );
 
-    return new Date() >= dueDate;
+    // Deadline has not passed
+    return new Date() <= dueDateTime;
+
+  }).length;
+
+  const overdue = projects.filter((p) => {
+
+    // Completed projects can never be overdue
+    if (p.status === "Completed") {
+      return false;
+    }
+
+    // No due date/time = not overdue
+    if (!p.due_date || !p.due_time) {
+      return false;
+    }
+
+    const dueDateTime = new Date(
+      `${p.due_date}T${p.due_time}`
+    );
+
+    return new Date() > dueDateTime;
 
   }).length;
 
@@ -159,53 +182,43 @@ export default function UserDetails() {
 
       data = data.filter((p) => {
 
-        if (p.status === "Completed") return false;
+        if (p.status === "Completed") {
+          return false;
+        }
 
-        const created = new Date(p.created_at);
+        if (!p.due_date || !p.due_time) {
+          return false;
+        }
 
-        const dueDate = new Date(
-          created.getTime() + 24 * 60 * 60 * 1000
+        const dueDateTime = new Date(
+          `${p.due_date}T${p.due_time}`
         );
 
-        return new Date() >= dueDate;
+        return new Date() > dueDateTime;
 
       });
 
     }
 
-    if (search.trim()) {
 
-      data = data.filter((p) =>
-        p.project_name
-          .toLowerCase()
-          .includes(search.toLowerCase())
-      );
-
-    }
 
     return data;
 
-  }, [projects, search, activeTab]);
-  const highProjects = filteredProjects.filter(
-    (p) => p.priority === "High"
-  );
+  }, [projects, activeTab]);
 
-  const mediumProjects = filteredProjects.filter(
-    (p) => p.priority === "Medium"
-  );
 
-  const lowProjects = filteredProjects.filter(
-    (p) => p.priority === "Low"
+  const completedProjects = projects.filter(
+    (p) => p.status === "Completed"
   );
 
   const pieData = {
-    labels: ["Completed", "Pending", "Due"],
+    labels: ["Completed", "Pending", "Overdue"],
     datasets: [
       {
         data: [
           completed,
           pending,
-          due,
+          overdue,
         ],
         backgroundColor: [
           "#22c55e",
@@ -249,17 +262,13 @@ export default function UserDetails() {
     <DashboardLayout>
       <div className="user-details-page">
 
-        <button
-          className="back-button"
-          onClick={() => navigate(-1)}
-        >
-          <ArrowLeft size={20} />
-          Back
-        </button>
+
 
         {/* Header */}
 
         <div className="user-profile">
+
+
 
           <div className="profile-avatar">
             {user?.full_name?.charAt(0)}
@@ -273,32 +282,17 @@ export default function UserDetails() {
 
           </div>
 
-        </div>
-
-        {/* Progress */}
-
-        <div className="progress-section">
-
-          <div className="progress-header">
-
-            <span>Overall Progress</span>
-
-            <strong>{progress}%</strong>
-
-          </div>
-
-          <div className="user-progress-bar">
-
-            <div
-              className="user-progress-fill"
-              style={{
-                width: `${progress}%`,
-              }}
-            />
-
-          </div>
+          <button
+            className="back-button"
+            onClick={() => navigate(-1)}
+          >
+            <ArrowLeft size={20} />
+            Back
+          </button>
 
         </div>
+
+
 
         {/* Stats */}
 
@@ -338,27 +332,14 @@ export default function UserDetails() {
 
             <AlertTriangle size={28} />
 
-            <h2>{due}</h2>
+            <h2>{overdue}</h2>
 
-            <span>Due</span>
+            <span>Overdue</span>
 
           </div>
 
         </div>
-        <div className="search-box">
 
-          <Search size={20} />
-
-          <input
-            type="text"
-            placeholder="Search project..."
-            value={search}
-            onChange={(e) =>
-              setSearch(e.target.value)
-            }
-          />
-
-        </div>
         <div className="filter-buttons">
 
           <button
@@ -384,117 +365,74 @@ export default function UserDetails() {
               setActiveTab("due")
             }
           >
-            Due
+            Overdue
           </button>
 
           <button
-            className={
-              activeTab === "completed"
-                ? "active"
-                : ""
-            }
-            onClick={() =>
-              setActiveTab("completed")
-            }
+            onClick={() => setShowCompletedModal(true)}
           >
             Completed
           </button>
 
         </div>
 
-        {[
-          {
-            title: "🔴 High Priority",
-            projects: highProjects,
-            className: "high-title",
-          },
-          {
-            title: "🟡 Medium Priority",
-            projects: mediumProjects,
-            className: "medium-title",
-          },
-          {
-            title: "🟢 Low Priority",
-            projects: lowProjects,
-            className: "low-title",
-          },
-        ].map((group) => (
-          <div key={group.title} className="priority-section">
+        <div className="table-card">
+          <table>
+            <thead>
+              <tr>
+                <th>Priority</th>
+                <th>Project</th>
+                <th>Status</th>
+                <th>Created</th>
+                <th>Action</th>
+              </tr>
+            </thead>
 
-            <h2 className={group.className}>
-              {group.title} ({group.projects.length})
-            </h2>
+            <tbody>
+              {filteredProjects.length === 0 ? (
+                <tr>
+                  <td colSpan={5}>No Projects Found</td>
+                </tr>
+              ) : (
+                filteredProjects.map((project) => (
+                  <tr
+                    key={project.id}
+                    className={`priority-row ${project.priority.toLowerCase()}`}
+                  >
+                    <td>
+                      <span
+                        className={`priority-badge ${project.priority.toLowerCase()}`}
+                      >
+                        {project.priority}
+                      </span>
+                    </td>
 
-            <div className="table-card">
+                    <td>{project.project_name}</td>
 
-              <table>
+                    <td>{project.status}</td>
 
-                <thead>
+                    <td>
+                      {new Date(project.created_at).toLocaleDateString()}
+                    </td>
 
-                  <tr>
-                    <th>Project</th>
-                    <th>Status</th>
-                    <th>Created</th>
-                    <th>Action</th>
+                    <td>
+                      <button
+                        className="view-project-btn"
+                        onClick={() =>
+                          navigate(`/admin/project/${project.id}`)
+                        }
+                      >
+                        View
+                      </button>
+                    </td>
                   </tr>
-
-                </thead>
-
-                <tbody>
-
-                  {group.projects.length === 0 ? (
-
-                    <tr>
-
-                      <td colSpan={4}>
-                        No Projects
-                      </td>
-
-                    </tr>
-
-                  ) : (
-
-                    group.projects.map((project) => (
-
-                      <tr key={project.id}>
-
-                        <td>{project.project_name}</td>
-
-                        <td>{project.status}</td>
-
-                        <td>
-                          {new Date(project.created_at).toLocaleDateString()}
-                        </td>
-
-                        <td>
-
-                          <button
-                            className="view-project-btn"
-                            onClick={() =>
-                              navigate(`/admin/project/${project.id}`)
-                            }
-                          >
-                            View
-                          </button>
-
-                        </td>
-
-                      </tr>
-
-                    ))
-
-                  )}
-
-                </tbody>
-
-              </table>
-
-            </div>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
 
 
-
-          </div>
-        ))}
 
         <div className="analytics-section">
 
@@ -502,10 +440,9 @@ export default function UserDetails() {
 
             <h2>Task Status Distribution</h2>
 
-            <Pie
-              data={pieData}
-              options={pieOptions}
-            />
+            <div className="chart-wrapper">
+              <Pie data={pieData} options={pieOptions} />
+            </div>
 
           </div>
 
@@ -529,8 +466,8 @@ export default function UserDetails() {
             </div>
 
             <div className="summary-item">
-              <span>Due</span>
-              <strong>{due}</strong>
+              <span>Overdue</span>
+              <strong>{overdue}</strong>
             </div>
 
             <div className="summary-item">
@@ -542,7 +479,101 @@ export default function UserDetails() {
 
         </div>
 
+        {/* Progress */}
+
+        <div className="progress-section">
+
+          <div className="progress-header">
+
+            <span>Overall Progress</span>
+
+            <strong>{progress}%</strong>
+
+          </div>
+
+          <div className="user-progress-bar">
+
+            <div
+              className="user-progress-fill"
+              style={{
+                width: `${progress}%`,
+              }}
+            />
+
+          </div>
+
+        </div>
+
+        {showCompletedModal && (
+          <div
+            className="modal-overlay"
+            onClick={() => setShowCompletedModal(false)}
+          >
+            <div
+              className="completed-modal"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="completed-header">
+                <h2>
+                  Completed Tasks ({completedProjects.length})
+                </h2>
+
+                <button
+                  onClick={() =>
+                    setShowCompletedModal(false)
+                  }
+                >
+                  ✕
+                </button>
+              </div>
+
+              <div className="completed-body">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Project</th>
+                      <th>Priority</th>
+                      <th>Completed</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    {completedProjects.map((project) => (
+                      <tr key={project.id}>
+                        <td>{project.project_name}</td>
+
+                        <td>{project.priority}</td>
+
+                        <td>
+                          {new Date(
+                            project.created_at
+                          ).toLocaleDateString()}
+                        </td>
+
+                        <td>
+                          <button
+                            className="view-project-btn"
+                            onClick={() =>
+                              navigate(
+                                `/admin/project/${project.id}`
+                              )
+                            }
+                          >
+                            View
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        )}
+
       </div>
+
     </DashboardLayout>
   );
 }
